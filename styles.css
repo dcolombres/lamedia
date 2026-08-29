@@ -1,0 +1,1271 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --felt: #145c3f;
+    --felt-deep: #0c3a28;
+    --gold: #d4b15a;
+    --gold-dim: #a8883a;
+    --cream: #f6ecd4;
+    --ink: #1c1914;
+    --muted: #5c574e;
+    --card: #fffdf8;
+    --red: #c0392b;
+    --black: #1a1a1a;
+}
+
+html, body {
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Nunito, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background:
+        radial-gradient(1200px 700px at 50% -10%, #1e7a52 0%, transparent 55%),
+        var(--felt-deep);
+}
+
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    overflow: auto;
+}
+
+.screen.active,
+.screen:target {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+#rules-screen:target,
+#rules-screen.active {
+    z-index: 5;
+}
+
+/* Menú */
+.start-container,
+.rules-container,
+.end-container,
+.tutorial-panel {
+    background: var(--cream);
+    color: var(--ink);
+    border: 1px solid rgba(212, 177, 90, 0.45);
+    border-radius: 8px;
+    width: min(560px, 92%);
+}
+
+.start-container,
+.end-container {
+    text-align: center;
+    padding: 2.4rem 2rem 2rem;
+}
+
+.crown-mark {
+    font-size: 2rem;
+    color: var(--gold-dim);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+}
+
+.game-title,
+.rules-container h2,
+.end-container h1,
+.tutorial-panel h2 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--felt-deep);
+}
+
+.game-title {
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+}
+
+.game-subtitle,
+.mode-hint {
+    color: var(--muted);
+    line-height: 1.45;
+}
+
+.game-subtitle {
+    margin-bottom: 1.4rem;
+}
+
+.mode-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.6rem;
+}
+
+.mode-btn,
+.ghost-btn,
+.primary-btn,
+.icon-btn,
+.header-btn {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.mode-btn {
+    border: 1px solid var(--felt);
+    background: transparent;
+    color: var(--felt-deep);
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.mode-btn.active {
+    background: var(--felt);
+    color: var(--cream);
+    border-color: var(--felt);
+}
+
+.mode-hint {
+    font-size: 0.92rem;
+    min-height: 2.4em;
+    margin-bottom: 1rem;
+}
+
+.name-setup,
+.player-setup {
+    margin-bottom: 1.2rem;
+}
+
+.name-setup label,
+.player-setup label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+}
+
+.name-setup input,
+.player-setup select {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid #c9bfa6;
+    background: #fff;
+    min-width: 220px;
+}
+
+.name-setup input {
+    width: min(280px, 100%);
+    text-align: center;
+}
+
+.primary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    padding: 0.85rem 1.6rem;
+    border: 0;
+    border-radius: 6px;
+    background: var(--felt);
+    color: var(--cream);
+    font-weight: 800;
+    font-size: 1.05rem;
+}
+
+.primary-btn:hover:not(:disabled) {
+    background: #0f4a32;
+}
+
+.primary-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.ghost-btn,
+a.ghost-btn,
+a.primary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: transparent;
+    color: var(--felt-deep);
+    border: 1px solid transparent;
+    padding: 0.7rem 1.1rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: 6px;
+}
+
+.ghost-btn:hover,
+a.ghost-btn:hover {
+    border-color: var(--gold-dim);
+}
+
+.start-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+}
+
+/* Reglas */
+.rules-container {
+    width: min(720px, 92%);
+    max-height: 88vh;
+    overflow: auto;
+    padding: 1.8rem 1.6rem 1.4rem;
+}
+
+.rules-container h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.rules-content section {
+    margin-bottom: 1.4rem;
+}
+
+.rules-content h3 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.35rem;
+    color: var(--felt);
+    margin-bottom: 0.45rem;
+}
+
+.rules-content p,
+.rules-content li {
+    line-height: 1.55;
+    margin-bottom: 0.4rem;
+}
+
+.rules-content ol,
+.rules-content ul {
+    padding-left: 1.2rem;
+}
+
+.rules-aside,
+.example-why {
+    background: #efe4c8;
+    border-radius: 6px;
+    padding: 0.7rem 0.85rem;
+}
+
+.rank-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 0.6rem 0 0.2rem;
+}
+
+.rank-chip.is-media {
+    background: var(--gold);
+    color: var(--felt-deep);
+    outline: 2px solid var(--gold-dim);
+}
+
+.rank-caption {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+}
+
+.rule-example {
+    background: #fffdf6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.rule-example h4 {
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
+}
+
+.example-setup,
+.tutorial-note {
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+.demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    padding-top: 1.2rem;
+    margin: 0.4rem 0 0.6rem;
+}
+
+.demo-card {
+    width: 62px;
+    height: 88px;
+    background: var(--card);
+    border: 1px solid #cfc6b0;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-weight: 800;
+}
+
+.demo-card.red { color: var(--red); }
+.demo-card.black { color: var(--black); }
+.demo-value { font-size: 1.05rem; }
+.demo-suit { font-size: 1.25rem; }
+
+.demo-player {
+    position: absolute;
+    top: -1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.demo-tag {
+    position: absolute;
+    bottom: -8px;
+    background: var(--felt);
+    color: var(--cream);
+    font-size: 0.62rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.king-demo { outline: 2px solid var(--gold); }
+.winner-demo .demo-tag { background: #2d6a4f; }
+.discard-demo { opacity: 0.4; }
+
+.distance-list {
+    max-width: 280px;
+    margin: 0.4rem auto 0.6rem;
+    text-align: left;
+    color: var(--muted);
+}
+
+/* Mesa */
+#game-screen {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at center, #1a6b48 0%, var(--felt-deep) 72%);
+    color: var(--cream);
+}
+
+.game-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(220px, 270px) minmax(0, 1fr);
+    min-height: 0;
+}
+
+.game-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0.65rem 0.7rem 0.75rem;
+    overflow-y: auto;
+    background: rgba(8, 32, 22, 0.55);
+    border-right: 1px solid rgba(212, 177, 90, 0.25);
+    min-height: 0;
+}
+
+.game-stage {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.felt-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.55rem 1.1rem;
+    flex-shrink: 0;
+    background: rgba(8, 32, 22, 0.45);
+    border-bottom: 1px solid rgba(212, 177, 90, 0.25);
+}
+
+.felt-brand {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.felt-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    font-weight: 700;
+    font-size: 0.88rem;
+    opacity: 0.92;
+    flex: 1;
+}
+
+#header-stock {
+    color: var(--gold);
+    font-weight: 800;
+}
+
+.score-board {
+    margin: 0;
+    background: rgba(8, 32, 22, 0.4);
+    border: 1px solid rgba(212, 177, 90, 0.35);
+    border-radius: 8px;
+    padding: 0.5rem 0.6rem 0.55rem;
+    flex-shrink: 0;
+}
+
+.score-board-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.45rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+}
+
+.score-board-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+#score-target {
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+.score-board-rows {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+}
+
+.score-row {
+    background: rgba(246, 236, 212, 0.08);
+    border: 1px solid rgba(246, 236, 212, 0.14);
+    border-radius: 6px;
+    padding: 0.4rem 0.55rem 0.45rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    column-gap: 0.4rem;
+    row-gap: 0.12rem;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.score-row.is-you {
+    border-color: rgba(246, 236, 212, 0.45);
+}
+
+.score-row.is-turn {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 1px var(--gold);
+}
+
+.score-row.is-lead .score-pts {
+    color: var(--gold);
+}
+
+.score-row.is-bump {
+    transform: translateY(-2px);
+    background: rgba(212, 177, 90, 0.22);
+}
+
+.score-name {
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.score-pts {
+    font-weight: 800;
+    font-size: 1.15rem;
+    justify-self: end;
+}
+
+.score-pts small {
+    font-size: 0.7rem;
+    font-weight: 700;
+    opacity: 0.75;
+    margin-left: 0.15rem;
+}
+
+.score-meta {
+    grid-column: 1 / -1;
+    font-size: 0.72rem;
+    opacity: 0.75;
+}
+
+.draw-prompt {
+    margin: 0 0.9rem 0.55rem;
+    background: rgba(246, 236, 212, 0.97);
+    color: var(--felt-deep);
+    border-radius: 8px;
+    border: 1px solid var(--gold);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    padding: 0.7rem 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem 1rem;
+    flex-shrink: 0;
+}
+
+.draw-prompt[hidden] {
+    display: none !important;
+}
+
+.draw-prompt-copy {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.draw-prompt-kicker {
+    margin: 0 0 0.15rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+}
+
+.draw-prompt p {
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.35;
+}
+
+#draw-bar-text {
+    font-size: 0.95rem;
+}
+
+.draw-bar-actions {
+    display: flex;
+    gap: 0.45rem;
+    flex-shrink: 0;
+}
+
+.draw-prompt .primary-btn,
+.draw-prompt .ghost-btn {
+    margin: 0;
+    width: auto;
+    min-width: 0;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.draw-prompt .ghost-btn {
+    border-color: var(--gold-dim);
+}
+
+.felt-play {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.felt-stock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    min-width: 56px;
+    padding: 0.2rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+}
+
+.felt-stock.is-live {
+    cursor: pointer;
+    border-color: var(--gold);
+    background: rgba(212, 177, 90, 0.16);
+    box-shadow: 0 0 0 3px rgba(212, 177, 90, 0.28);
+    animation: stock-pulse 1.4s ease-in-out infinite;
+}
+
+.felt-stock.is-taking .stock-back {
+    animation: stock-take 0.45s ease;
+}
+
+.stock-back {
+    width: 42px;
+    height: 58px;
+    border-radius: 6px;
+    background:
+        repeating-linear-gradient(45deg, #7a1f2b 0 5px, #5c1520 5px 10px);
+    border: 1px solid #3d0e14;
+    box-shadow: 3px 3px 0 #3d0e14, 6px 6px 0 rgba(0, 0, 0, 0.25);
+}
+
+.felt-stock.is-live .stock-back {
+    width: 58px;
+    height: 82px;
+    box-shadow: 4px 4px 0 #3d0e14, 8px 8px 0 rgba(0, 0, 0, 0.28);
+}
+
+#stock-count {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+.stock-live-hint {
+    display: none;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--cream);
+}
+
+.felt-stock.is-live .stock-live-hint {
+    display: block;
+}
+
+@keyframes stock-pulse {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+@keyframes stock-take {
+    0% { transform: translateY(0) scale(1); }
+    40% { transform: translateY(-10px) scale(1.06); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.header-btn {
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 0.82rem;
+    padding: 0.45rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.header-btn:hover {
+    background: var(--gold);
+    color: var(--felt-deep);
+}
+
+.icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    font-weight: 800;
+}
+
+.icon-btn:hover {
+    background: var(--gold);
+    color: var(--felt-deep);
+}
+
+.turn-banner {
+    margin: 0;
+    text-align: left;
+    background: rgba(246, 236, 212, 0.95);
+    color: var(--felt-deep);
+    font-weight: 800;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    padding: 0.55rem 0.7rem;
+    border-radius: 6px;
+    border-left: 4px solid var(--gold);
+    flex-shrink: 0;
+}
+
+.table-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1rem 0.5rem;
+    min-height: 0;
+}
+
+.sidebar-rivals {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.sidebar-label {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--gold);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.seats {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    width: 100%;
+    max-width: none;
+    margin-bottom: 0;
+}
+
+.seat {
+    min-width: 0;
+    background: rgba(8, 32, 22, 0.4);
+    border: 1px solid rgba(246, 236, 212, 0.18);
+    border-radius: 8px;
+    padding: 0.4rem 0.55rem;
+    text-align: left;
+}
+
+.seat.turn {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 1px var(--gold);
+}
+
+.seat.you {
+    border-color: rgba(246, 236, 212, 0.55);
+}
+
+.seat-name {
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: none;
+    margin: 0;
+}
+
+.seat-role {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0.15rem 0 0.3rem;
+}
+
+.seat.ai .seat-role {
+    color: rgba(246, 236, 212, 0.55);
+}
+
+.seat-stats {
+    display: none;
+}
+
+.backs {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 0.25rem;
+    min-height: 22px;
+}
+
+.card-back {
+    width: 18px;
+    height: 26px;
+    border-radius: 3px;
+    background:
+        repeating-linear-gradient(45deg, #7a1f2b 0 4px, #5c1520 4px 8px);
+    border: 1px solid #3d0e14;
+    flex-shrink: 0;
+}
+
+.card-back + .card-back {
+    margin-left: -10px;
+}
+
+.felt {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    background:
+        radial-gradient(ellipse at center, #1f7a52 0%, #114a34 70%);
+    border: 10px solid #5c3b16;
+    border-radius: 48% / 42%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem 1.4rem 1.4rem;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.28);
+}
+
+.felt-label {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.7rem;
+    letter-spacing: 0.08em;
+}
+
+.trick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.play {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.play-name {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(246, 236, 212, 0.75);
+}
+
+.play.is-king .play-name {
+    color: var(--gold);
+}
+
+.play.is-overthrown .play-name {
+    color: #c0392b;
+    text-decoration: line-through;
+}
+
+.play.is-overthrown .card {
+    opacity: 0.4;
+    outline: 2px dashed #c0392b;
+}
+
+.play.is-discard .card {
+    opacity: 0.45;
+}
+
+.play.is-lead .card {
+    outline: 2px solid var(--gold);
+}
+
+.play.is-winner .card {
+    outline: 3px solid #f3e5ab;
+}
+
+.play.is-winner .play-name {
+    color: #f3e5ab;
+}
+
+/* Cartas */
+.card {
+    width: 74px;
+    height: 104px;
+    background: var(--card);
+    color: var(--black);
+    border-radius: 8px;
+    border: 1px solid #d7cbb0;
+    position: relative;
+    font-weight: 800;
+    user-select: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+}
+
+.card.red { color: var(--red); }
+
+.card.joker {
+    background:
+        linear-gradient(160deg, #2b1a3d 0%, #1a1028 55%, #3d2a12 100%);
+    color: var(--gold);
+    border-color: var(--gold-dim);
+}
+
+.joker-label {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+.play.is-joker .play-name {
+    color: var(--gold);
+}
+
+.play.is-joker .card {
+    outline: 2px solid var(--gold);
+}
+
+.demo-card.joker-demo {
+    background: #2b1a3d;
+    color: var(--gold);
+    border-color: var(--gold-dim);
+}
+
+.card .corner {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    font-size: 0.78rem;
+}
+
+.card .corner.tl { top: 5px; left: 6px; }
+.card .corner.br { bottom: 5px; right: 6px; transform: rotate(180deg); }
+
+.card .pip {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.hand-cards .card {
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.hand-cards .card:hover:not(.not-playable) {
+    transform: translateY(-10px);
+}
+
+.card.not-playable {
+    opacity: 0.38;
+    cursor: not-allowed;
+    filter: grayscale(0.3);
+}
+
+.hand-cards.is-waiting .card {
+    opacity: 0.4;
+    cursor: default;
+    transform: none;
+}
+
+.hand-cards.is-waiting .card:hover {
+    transform: none;
+}
+
+/* Mano */
+.rack {
+    background: #0d261c;
+    padding: 0.5rem 1rem 0.7rem;
+    border-top: 1px solid rgba(212, 177, 90, 0.28);
+    flex-shrink: 0;
+}
+
+.rack-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: none;
+    margin: 0 0 0.4rem;
+    gap: 0.6rem;
+}
+
+.rack-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+
+#pass-trick {
+    padding: 0.35rem 0.85rem;
+}
+
+.pass-chip {
+    width: 74px;
+    height: 104px;
+    border-radius: 8px;
+    border: 2px dashed rgba(246, 236, 212, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: rgba(246, 236, 212, 0.7);
+    background: rgba(8, 32, 22, 0.35);
+}
+
+.play.is-pass .play-name {
+    color: rgba(246, 236, 212, 0.55);
+}
+
+.rack-head h3 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.25rem;
+    color: var(--gold);
+}
+
+#rack-hint {
+    font-size: 0.85rem;
+    color: rgba(246, 236, 212, 0.7);
+}
+
+.hand-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 6px;
+    max-width: none;
+    margin: 0;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+}
+
+/* Fin */
+.end-container {
+    padding-bottom: 2rem;
+}
+
+.final-stats {
+    text-align: left;
+    margin: 1.2rem 0;
+    background: #efe4c8;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+}
+
+.final-stats h3 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(92, 87, 78, 0.15);
+}
+
+.stat-row.is-winner {
+    font-weight: 800;
+    color: var(--felt);
+}
+
+/* Tutorial + toast */
+.tutorial-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 24, 18, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: 1rem;
+}
+
+.tutorial-overlay[hidden] {
+    display: none;
+}
+
+.tutorial-panel {
+    padding: 1.6rem 1.4rem 1.2rem;
+    text-align: center;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+.tutorial-kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--gold-dim);
+}
+
+.tutorial-step { display: none; }
+.tutorial-step.active { display: block; }
+.tutorial-step p { line-height: 1.5; margin-top: 0.4rem; }
+
+.tutorial-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1rem;
+}
+
+#tutorial-progress {
+    width: 100%;
+    font-weight: 800;
+    color: var(--muted);
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 1.2rem;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--cream);
+    color: var(--felt-deep);
+    font-weight: 800;
+    padding: 0.7rem 1.1rem;
+    border-radius: 6px;
+    border: 1px solid var(--gold);
+    z-index: 30;
+    max-width: min(480px, 92%);
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+@media (max-width: 860px) {
+    #game-screen {
+        overflow: auto;
+    }
+
+    .game-body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .game-sidebar {
+        border-right: 0;
+        border-bottom: 1px solid rgba(212, 177, 90, 0.25);
+        max-height: none;
+        overflow: visible;
+        padding: 0.55rem 0.7rem;
+    }
+
+    .score-board-rows {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    }
+
+    .seats {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .seat {
+        flex: 1 1 120px;
+        text-align: center;
+    }
+
+    .seat-name {
+        margin: 0 auto;
+    }
+
+    .backs {
+        justify-content: center;
+    }
+
+    .draw-prompt {
+        flex-direction: column;
+        align-items: stretch;
+        margin: 0 0.7rem 0.5rem;
+    }
+
+    .draw-bar-actions .primary-btn,
+    .draw-bar-actions .ghost-btn {
+        flex: 1;
+    }
+
+    .felt {
+        border-radius: 28px;
+        min-height: 180px;
+        border-width: 8px;
+    }
+
+    .card {
+        width: 62px;
+        height: 88px;
+    }
+
+    .hand-cards .card {
+        width: 54px;
+        height: 76px;
+        flex-shrink: 0;
+    }
+
+    .pass-chip {
+        width: 54px;
+        height: 76px;
+        font-size: 0.65rem;
+    }
+
+    .felt-header {
+        flex-wrap: wrap;
+    }
+
+    .header-btn {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .felt-brand {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .felt-stock.is-live,
+    .felt-stock.is-taking .stock-back {
+        animation: none;
+    }
+}

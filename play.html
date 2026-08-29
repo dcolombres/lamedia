@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yo Soy El Rey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="start-screen" class="screen active">
+        <div class="start-container">
+            <p class="crown-mark" aria-hidden="true">♛</p>
+            <h1 class="game-title">Yo Soy El Rey</h1>
+            <p class="game-subtitle">Elegí el Rey, derrocá y pescá del pozo. El primero en 21 se lleva la corona.</p>
+
+            <div class="name-setup">
+                <label for="player-name">Tu nombre</label>
+                <input type="text" id="player-name" maxlength="16" placeholder="Cómo te llamás" autocomplete="nickname" spellcheck="false">
+            </div>
+
+            <div class="mode-toggle" role="group" aria-label="Modo de juego">
+                <button type="button" id="mode-solo" class="mode-btn active">Tú vs IA</button>
+                <button type="button" id="mode-table" class="mode-btn">Mesa con varias IA</button>
+            </div>
+            <p id="mode-hint" class="mode-hint">12 cartas, pozo y dos comodines. Sumá hasta 21 puntos.</p>
+
+            <div id="table-setup" class="player-setup" hidden>
+                <label for="player-count">Asientos en la mesa</label>
+                <select id="player-count">
+                    <option value="3">3 — tú + 2 IA</option>
+                    <option value="4" selected>4 — tú + 3 IA</option>
+                    <option value="5">5 — tú + 4 IA</option>
+                    <option value="6">6 — tú + 5 IA</option>
+                </select>
+            </div>
+
+            <button type="button" id="start-game" class="primary-btn">Sentarse a la mesa</button>
+            <div class="start-links">
+                <a href="#rules-screen" id="show-rules" class="ghost-btn">Reglas</a>
+                <button type="button" id="show-tutorial" class="ghost-btn">Cómo se juega</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="rules-screen" class="screen">
+        <div class="rules-container">
+            <h2>Reglas</h2>
+            <div class="rules-content">
+                <section>
+                    <h3>Objetivo</h3>
+                    <p>Ganá <strong>rondas</strong> y acumulá puntos. El primero en llegar a <strong>21</strong> gana la partida.</p>
+                    <p class="rules-aside">Una ronda se cierra cuando ganás una mano <strong>y esa era tu última carta</strong>. Entonces se suman los puntos y, si nadie llegó a 21, se vuelve a repartir. Si te quedás sin cartas <strong>sin ganar</strong> esa mano, en esa ronda ya no jugás.</p>
+                </section>
+
+                <section>
+                    <h3>Preparación</h3>
+                    <ul>
+                        <li>Baraja de 54: ♥ ♦ ♠ ♣ del 2 al As, más <strong>2 comodines</strong>.</li>
+                        <li><strong>12 cartas</strong> si son 2 jugadores; <strong>8 cartas</strong> si hay más de 2. El resto queda en el <strong>pozo</strong>.</li>
+                        <li>Al repartir, empieza quien tenga el <strong>K♥</strong> y <strong>debe abrirlo como primer Rey de esa ronda</strong>. En las manos siguientes elige el ganador, sin obligación del K♥. Si el K♥ no se repartió, empieza la carta más alta (elige libre). Los comodines no cuentan para abrir.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Una mano</h3>
+                    <ol>
+                        <li><strong>Toca una carta</strong> para declararla Rey: fija el palo.</li>
+                        <li>Después cada uno <strong>elige</strong>: seguir el palo (una carta; el resto se guarda), <strong>derrocar</strong>, tirar el <strong>comodín</strong>, <strong>descartar</strong> otra carta, o <strong>pasar</strong> y no competir.</li>
+                        <li>Seguir el palo <strong>no es obligatorio</strong>. Si descartás (no seguís, no derrocás, no es comodín), después podés <strong>robar del pozo</strong>.</li>
+                        <li>Si derrocás, el palo cambia y cada uno vuelve a elegir sobre el palo nuevo.</li>
+                        <li>El ganador suma 1 punto (o 2 si derrocó y ganó) y elige el próximo Rey.</li>
+                    </ol>
+                    <p class="rules-aside">Pasar guarda todas tus cartas: no ganás esta mano, pero tampoco tirás un descarte forzado. Cerrar sigue pidiendo ganar con tu última carta, así que vaciar la mano es una decisión, no un trámite.</p>
+                </section>
+
+                <section>
+                    <h3>Derrocamiento</h3>
+                    <p>El mismo número de <strong>otro palo</strong> derroca al Rey. El palo cambia y la mano sigue: cada uno elige de nuevo sobre el palo nuevo.</p>
+                    <p class="rules-aside">Podés derrocar aunque todavía te quede el palo viejo, o guardar el otro 9 y seguir el palo. Se puede derrocar más de una vez (9♥ → 9♠ → 9♦). El comodín no derroca: si el Rey es un comodín, no hay número que igualar. Si derrocás y ganás la mano, vale <strong>+2</strong>.</p>
+                </section>
+
+                <section>
+                    <h3>Quién gana</h3>
+                    <p>Solo cuentan las cartas del <strong>palo vigente</strong> y los comodines. Lo del palo derrocado no suma.</p>
+                    <p><strong>Normal:</strong> la más alta. El <strong>K es la más alta</strong> y el <strong>As la más baja</strong>. Orden:</p>
+                    <div class="rank-strip" aria-label="De mayor a menor">
+                        <span class="rank-chip">K</span>
+                        <span class="rank-chip">Q</span>
+                        <span class="rank-chip">J</span>
+                        <span class="rank-chip">10</span>
+                        <span class="rank-chip">9</span>
+                        <span class="rank-chip">8</span>
+                        <span class="rank-chip">7</span>
+                        <span class="rank-chip is-media">6</span>
+                        <span class="rank-chip">5</span>
+                        <span class="rank-chip">4</span>
+                        <span class="rank-chip">3</span>
+                        <span class="rank-chip">2</span>
+                        <span class="rank-chip">A</span>
+                    </div>
+                    <p class="rank-caption">Mayor → menor. El 6 está en el medio: si lo declarás, vale <strong>la media</strong>.</p>
+                    <p><strong>La media:</strong> solo si <strong>declaraste un 6</strong> como Rey. No gana la más alta: gana lo más cerca del 6. El propio 6 gana (salvo comodín). El K, que normalmente es la más alta, acá queda último. Si dos cartas están a la misma distancia (5 y 7), gana la más alta de las dos. Si derrocan, la media se cae y vuelve a ganar la más alta.</p>
+                    <p><strong>Comodín:</strong> hay 2. Gana a <strong>cualquier Rey</strong>, aunque se haya tirado <strong>antes</strong> de un derrocamiento. Podés tirarlo aunque tengas el palo. Si salen los dos, gana el último. Si el Rey es un comodín, quien tenga el otro está obligado a jugarlo.</p>
+                </section>
+
+                <section>
+                    <h3>Puntos</h3>
+                    <ul>
+                        <li><strong>+1</strong> por cada mano que ganás. <strong>+2</strong> si derrocaste y ganaste esa mano.</li>
+                        <li>Si <strong>cerrás</strong> (ganás esa mano con tu última carta): esos puntos, <strong>más +5</strong>, <strong>más +1</strong> por cada carta que les queda a los demás.</li>
+                        <li>Primero en <strong>21</strong> gana. Si hay empate en 21 o más, ronda extra.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Ejemplos</h3>
+                    <div class="rule-examples">
+                        <figure class="rule-example">
+                            <h4>Gana la más alta</h4>
+                            <p class="example-setup">Rey K♥. Ana no tiene corazones y elige descartar en vez de pasar.</p>
+                            <div class="demo-row">
+                                <div class="demo-card red king-demo winner-demo"><span class="demo-player">Tú</span><span class="demo-value">K</span><span class="demo-suit">♥</span><span class="demo-tag">Gana</span></div>
+                                <div class="demo-card red"><span class="demo-player">Luis</span><span class="demo-value">Q</span><span class="demo-suit">♥</span></div>
+                                <div class="demo-card red"><span class="demo-player">Marta</span><span class="demo-value">A</span><span class="demo-suit">♥</span></div>
+                                <div class="demo-card discard-demo"><span class="demo-player">Ana</span><span class="demo-value">9</span><span class="demo-suit">♠</span><span class="demo-tag">No cuenta</span></div>
+                            </div>
+                            <p class="example-why">K &gt; Q &gt; A. El 9♠ no es corazón ni un K, así que no derroca. Ana podría haber pasado y guardado el 9♠ para más adelante.</p>
+                        </figure>
+                        <figure class="rule-example">
+                            <h4>Pasar o guardar el palo</h4>
+                            <p class="example-setup">Rey Q♥. Tenés 3♥, que no le gana a la Q, y un K♠ que querés declarar después.</p>
+                            <div class="demo-row">
+                                <div class="demo-card red king-demo winner-demo"><span class="demo-player">Luis</span><span class="demo-value">Q</span><span class="demo-suit">♥</span><span class="demo-tag">Gana</span></div>
+                                <div class="demo-card discard-demo"><span class="demo-player">Tú</span><span class="demo-value">Pasa</span><span class="demo-suit">—</span><span class="demo-tag">Guarda el 3♥</span></div>
+                            </div>
+                            <p class="example-why">No estás obligado a tirar el 3♥. Pasás, no competís, y te quedás el corazón y el K♠. Si tirabas el 3, perdías una carta sin chance de ganar.</p>
+                        </figure>
+                        <figure class="rule-example">
+                            <h4>Una carta del palo</h4>
+                            <p class="example-setup">Rey 9♠. Vos tenés 9♠ y 3♠: tirás el 9 y te guardás el 3. Luis tira K♠.</p>
+                            <div class="demo-row">
+                                <div class="demo-card black king-demo"><span class="demo-player">Tú</span><span class="demo-value">9</span><span class="demo-suit">♠</span><span class="demo-tag">Rey</span></div>
+                                <div class="demo-card black winner-demo"><span class="demo-player">Luis</span><span class="demo-value">K</span><span class="demo-suit">♠</span><span class="demo-tag">Gana</span></div>
+                            </div>
+                            <p class="example-why">No se vacía el palo. Gana el K. Tu 3♠ queda para más adelante.</p>
+                        </figure>
+                        <figure class="rule-example">
+                            <h4>Derrocamiento</h4>
+                            <p class="example-setup">Juan declara 9♥. Pedro tira J♥ y iría ganando. María tira 9♠.</p>
+                            <div class="demo-row">
+                                <div class="demo-card red"><span class="demo-player">Juan</span><span class="demo-value">9</span><span class="demo-suit">♥</span><span class="demo-tag">Derrocado</span></div>
+                                <div class="demo-card red"><span class="demo-player">Pedro</span><span class="demo-value">J</span><span class="demo-suit">♥</span></div>
+                                <div class="demo-card black king-demo winner-demo"><span class="demo-player">María</span><span class="demo-value">9</span><span class="demo-suit">♠</span><span class="demo-tag">Nuevo Rey</span></div>
+                            </div>
+                            <p class="example-why">El mismo número de otro palo cambia el Rey. Ahora cada uno tira una pica. El J♥ ya no cuenta. María se guarda el resto de picas. Si gana ella, suma 2.</p>
+                        </figure>
+                        <figure class="rule-example">
+                            <h4>Después del derrocamiento</h4>
+                            <p class="example-setup">El Rey ya es 9♠. María ya tiró el 9 y no tira más. Pedro no tiene picas y descarta: después puede robar del pozo.</p>
+                            <div class="demo-row">
+                                <div class="demo-card black king-demo winner-demo"><span class="demo-player">María</span><span class="demo-value">9</span><span class="demo-suit">♠</span><span class="demo-tag">Gana · +2</span></div>
+                                <div class="demo-card discard-demo"><span class="demo-player">Pedro</span><span class="demo-value">3</span><span class="demo-suit">♦</span><span class="demo-tag">No cuenta</span></div>
+                            </div>
+                            <p class="example-why">María ya jugó su carta de este Rey. Si Pedro tuviera K♠, tiraría esa y ganaría él (1 punto, no 2).</p>
+                        </figure>
+                        <figure class="rule-example">
+                            <h4>La media</h4>
+                            <p class="example-setup">Declaraste 6♣: entra la media. Gana lo más cerca del 6, no lo más alto. El K perdería. Si derrocan, la media se cae.</p>
+                            <div class="demo-row">
+                                <div class="demo-card black king-demo winner-demo"><span class="demo-player">Tú</span><span class="demo-value">6</span><span class="demo-suit">♣</span><span class="demo-tag">La media</span></div>
+                                <div class="demo-card black"><span class="demo-player">Luis</span><span class="demo-value">K</span><span class="demo-suit">♣</span></div>
+                                <div class="demo-card black"><span class="demo-player">Marta</span><span class="demo-value">5</span><span class="demo-suit">♣</span></div>
+                            </div>
+                            <ul class="distance-list">
+                                <li>6♣ → distancia <strong>0</strong> · gana</li>
+                                <li>5♣ → distancia 1</li>
+                                <li>K♣ → distancia 7 · lo más lejos</li>
+                            </ul>
+                            <p class="example-why">El 6 le gana al K porque está en el centro. Un 6♠ derrocaría y la media se caería: ganaría la pica más alta.</p>
+                        </figure>
+                        <figure class="rule-example">
+                            <h4>El comodín</h4>
+                            <p class="example-setup">Rey K♥. El comodín le gana al K. No cambia el palo.</p>
+                            <div class="demo-row">
+                                <div class="demo-card red king-demo"><span class="demo-player">Tú</span><span class="demo-value">K</span><span class="demo-suit">♥</span><span class="demo-tag">Rey</span></div>
+                                <div class="demo-card red"><span class="demo-player">Luis</span><span class="demo-value">A</span><span class="demo-suit">♥</span></div>
+                                <div class="demo-card joker-demo winner-demo"><span class="demo-player">Marta</span><span class="demo-value">★</span><span class="demo-suit">🃏</span><span class="demo-tag">Gana</span></div>
+                            </div>
+                            <p class="example-why">El comodín gana a cualquier Rey. Si después sale el otro, ese se queda con la mano. Si derrocan el Rey después, el comodín ya tirado sigue ganando.</p>
+                        </figure>
+                        <figure class="rule-example">
+                            <h4>En la mesa</h4>
+                            <ol>
+                                <li>Toca una carta de tu mano: se juega al instante. O tocá <strong>Pasar</strong> para no competir.</li>
+                                <li>El Rey derrocado se tacha; el nuevo queda marcado.</li>
+                                <li>La cinta de la izquierda te dice el palo vigente y el siguiente paso.</li>
+                            </ol>
+                        </figure>
+                    </div>
+                </section>
+            </div>
+            <a href="#start-screen" id="back-to-start" class="primary-btn">Volver</a>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <header class="felt-header">
+            <p class="felt-brand">Yo Soy El Rey</p>
+            <div class="felt-meta">
+                <span id="current-round">Ronda 1 · Mano 1</span>
+                <span id="current-king">Rey —</span>
+                <span id="header-stock">Pozo —</span>
+            </div>
+            <div class="header-actions">
+                <button type="button" id="new-game-ingame" class="header-btn">Nueva partida</button>
+                <button type="button" id="help-ingame" class="icon-btn" title="Reglas" aria-label="Reglas">?</button>
+            </div>
+        </header>
+
+        <div class="game-body">
+            <aside class="game-sidebar">
+                <p id="turn-hint" class="turn-banner">Toca una carta para ser el Rey.</p>
+
+                <section id="score-board" class="score-board" aria-label="Marcador">
+                    <div class="score-board-head">
+                        <span class="score-board-title">Marcador</span>
+                        <span id="score-target">a 21</span>
+                    </div>
+                    <div id="score-board-rows" class="score-board-rows"></div>
+                </section>
+
+                <div class="sidebar-rivals">
+                    <p class="sidebar-label">Rivales</p>
+                    <div id="players-area" class="seats"></div>
+                </div>
+            </aside>
+
+            <div class="game-stage">
+                <div class="table-wrap">
+                    <div class="felt">
+                        <p class="felt-label" id="suit-label">Esperando Rey</p>
+                        <div class="felt-play">
+                            <div class="felt-stock" id="felt-stock" aria-label="Pozo">
+                                <span class="stock-back" aria-hidden="true"></span>
+                                <span id="stock-count">Pozo —</span>
+                                <span class="stock-live-hint">Tocá para robar</span>
+                            </div>
+                            <div id="played-cards" class="trick"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="draw-bar" class="draw-prompt" hidden>
+                    <div class="draw-prompt-copy">
+                        <p class="draw-prompt-kicker">No seguiste el palo</p>
+                        <p id="draw-bar-text">Podés pescar una carta del pozo.</p>
+                    </div>
+                    <div class="draw-bar-actions">
+                        <button type="button" id="draw-take" class="primary-btn">Robar del pozo</button>
+                        <button type="button" id="draw-skip" class="ghost-btn">Quedarme</button>
+                    </div>
+                </div>
+
+                <section id="player-hand" class="rack">
+                    <div class="rack-head">
+                        <h3>Tu mano</h3>
+                        <div class="rack-actions">
+                            <p id="rack-hint">Toca una carta</p>
+                            <button type="button" id="pass-trick" class="header-btn" hidden>Pasar</button>
+                        </div>
+                    </div>
+                    <div id="hand-cards" class="hand-cards"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div id="end-screen" class="screen">
+        <div class="end-container">
+            <p class="crown-mark" aria-hidden="true">♛</p>
+            <h1 id="winner-title">La mesa se rinde</h1>
+            <p id="winner-text">Has ganado la partida</p>
+            <div class="final-stats">
+                <h3>La mesa</h3>
+                <div id="final-stats-list"></div>
+            </div>
+            <button type="button" id="play-again" class="primary-btn">Iniciar nuevo juego</button>
+            <button type="button" id="back-to-menu" class="ghost-btn">Menú</button>
+        </div>
+    </div>
+
+    <div id="tutorial-overlay" class="tutorial-overlay" hidden>
+        <div class="tutorial-panel" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
+            <p class="tutorial-kicker">En un minuto</p>
+            <h2 id="tutorial-title">Cómo se juega</h2>
+            <div class="tutorial-steps">
+                <section class="tutorial-step active" data-step="0">
+                    <p>Jugás por <strong>rondas</strong>. Cada mano ganada suma 1; si derrocás y ganás, suma 2. Si cerrás con tu última carta, van <strong>más +5</strong> y <strong>+1 por cada carta</strong> que les queda a los otros. Primero en <strong>21</strong> gana.</p>
+                    <div class="demo-row">
+                        <div class="demo-card red"><span class="demo-value">K</span><span class="demo-suit">♥</span></div>
+                        <div class="demo-card black"><span class="demo-value">7</span><span class="demo-suit">♠</span></div>
+                        <div class="demo-card red"><span class="demo-value">3</span><span class="demo-suit">♦</span></div>
+                        <div class="demo-card black"><span class="demo-value">10</span><span class="demo-suit">♣</span></div>
+                    </div>
+                    <p class="tutorial-note">En 1 vs 1 arrancás con 12 cartas; en mesa, con 8.</p>
+                </section>
+                <section class="tutorial-step" data-step="1">
+                    <p><strong>Toca una carta</strong> para declararla Rey. Esa carta marca el palo. Al <strong>repartir</strong>, si tenés el K♥ tenés que abrirlo: es el primer Rey de esa ronda.</p>
+                    <div class="demo-row">
+                        <div class="demo-card red king-demo"><span class="demo-value">K</span><span class="demo-suit">♥</span><span class="demo-tag">Rey</span></div>
+                    </div>
+                    <p class="tutorial-note">Si declarás un 6, entra <strong>la media</strong>: gana lo más cerca del 6, no el K. Un K es la más alta en cualquier otra mano.</p>
+                </section>
+                <section class="tutorial-step" data-step="2">
+                    <p>En tu turno <strong>elegís</strong>: seguir el palo, <strong>derrocar</strong> con el mismo número de otro palo, descartar, o <strong>pasar</strong> y guardar las cartas.</p>
+                    <div class="demo-row">
+                        <div class="demo-card red"><span class="demo-value">9</span><span class="demo-suit">♥</span></div>
+                        <div class="demo-card red"><span class="demo-value">J</span><span class="demo-suit">♥</span></div>
+                        <div class="demo-card black king-demo"><span class="demo-value">9</span><span class="demo-suit">♠</span><span class="demo-tag">Derroca</span></div>
+                    </div>
+                    <p class="tutorial-note">Seguir el palo no es obligatorio. Si descartás, después podés robar del pozo. Pasar no tira nada.</p>
+                </section>
+                <section class="tutorial-step" data-step="3">
+                    <p>Gana lo más alto del palo. Si <strong>declaraste un 6</strong>, entra <strong>la media</strong>: gana lo más cerca del 6 (el K queda último). El <strong>comodín</strong> le gana igual.</p>
+                    <div class="demo-row">
+                        <div class="demo-card red winner-demo"><span class="demo-value">K</span><span class="demo-suit">♥</span><span class="demo-tag">Gana</span></div>
+                        <div class="demo-card red"><span class="demo-value">Q</span><span class="demo-suit">♥</span></div>
+                        <div class="demo-card joker-demo"><span class="demo-value">★</span><span class="demo-suit">🃏</span></div>
+                    </div>
+                    <p class="tutorial-note">El ganador elige el siguiente Rey. El ? abre las reglas.</p>
+                </section>
+            </div>
+            <div class="tutorial-nav">
+                <span id="tutorial-progress">1 / 4</span>
+                <button type="button" id="tutorial-skip" class="ghost-btn">Saltar</button>
+                <button type="button" id="tutorial-next" class="primary-btn">Siguiente</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="game.js"></script>
+</body>
+</html>
