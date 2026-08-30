@@ -58,7 +58,7 @@ cd lamedia
 
 Después abrí `index.html` (doble clic, o “Open with Live Server” en el editor). `play.html` es la misma mesa.
 
-La mesa también está publicada con GitHub Pages en [dcolombres.github.io/lamedia](https://dcolombres.github.io/lamedia/). El primer despliegue corre al pushear a `main`.
+La mesa también está publicada con GitHub Pages en [dcolombres.github.io/lamedia](https://dcolombres.github.io/lamedia/). Cada push a `main` vuelve a publicar. Si la URL da 404, esperá un minuto o revisá [Actions](https://github.com/dcolombres/lamedia/actions).
 
 ---
 
