@@ -4,7 +4,8 @@ Juego de cartas en el navegador: declarás el **Rey**, derrocás, pescás del po
 
 Jugás vos contra una o varias IA. No hay servidor ni build: HTML, CSS y JavaScript.
 
-**Jugar:** abrí [`index.html`](index.html) en el navegador.  
+**Jugar online:** [dcolombres.github.io/lamedia](https://dcolombres.github.io/lamedia/)  
+**En local:** abrí [`index.html`](index.html) en el navegador.  
 **Reglas completas:** [`instrucciones.md`](instrucciones.md)
 
 ---
@@ -56,6 +57,8 @@ cd lamedia
 ```
 
 Después abrí `index.html` (doble clic, o “Open with Live Server” en el editor). `play.html` es la misma mesa.
+
+La mesa también está publicada con GitHub Pages en [dcolombres.github.io/lamedia](https://dcolombres.github.io/lamedia/). El primer despliegue corre al pushear a `main`.
 
 ---
 
