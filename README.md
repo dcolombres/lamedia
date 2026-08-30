@@ -58,7 +58,9 @@ cd lamedia
 
 Después abrí `index.html` (doble clic, o “Open with Live Server” en el editor). `play.html` es la misma mesa.
 
-La mesa también está publicada con GitHub Pages en [dcolombres.github.io/lamedia](https://dcolombres.github.io/lamedia/). Cada push a `main` vuelve a publicar. Si la URL da 404, esperá un minuto o revisá [Actions](https://github.com/dcolombres/lamedia/actions).
+La mesa se publica con GitHub Pages: [dcolombres.github.io/lamedia](https://dcolombres.github.io/lamedia/). Cada push a `main` vuelve a publicar.
+
+La primera vez hay que activar Pages (GitHub no lo deja hacer al workflow): [Settings → Pages](https://github.com/dcolombres/lamedia/settings/pages) → **Source: GitHub Actions**. Después reejecutá el workflow en [Actions](https://github.com/dcolombres/lamedia/actions).
 
 ---
 
