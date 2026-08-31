@@ -55,7 +55,9 @@ body {
 }
 
 #rules-screen:target,
-#rules-screen.active {
+#rules-screen.active,
+#tips-screen:target,
+#tips-screen.active {
     z-index: 5;
 }
 
@@ -259,9 +261,40 @@ a.ghost-btn:hover {
     margin-bottom: 0.4rem;
 }
 
+.rules-content a {
+    color: var(--felt);
+    font-weight: 800;
+}
+
 .rules-content ol,
 .rules-content ul {
     padding-left: 1.2rem;
+}
+
+.rules-content h4 {
+    font-size: 1.02rem;
+    margin: 0.85rem 0 0.35rem;
+    color: var(--felt-deep);
+}
+
+.tips-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.55rem 0 0.75rem;
+    font-size: 0.9rem;
+}
+
+.tips-table th,
+.tips-table td {
+    text-align: left;
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid rgba(28, 25, 20, 0.12);
+    vertical-align: top;
+}
+
+.tips-table th {
+    font-weight: 800;
+    color: var(--felt-deep);
 }
 
 .rules-aside,
@@ -382,7 +415,7 @@ a.ghost-btn:hover {
 .game-body {
     flex: 1;
     display: grid;
-    grid-template-columns: minmax(220px, 270px) minmax(0, 1fr);
+    grid-template-columns: minmax(170px, 210px) minmax(0, 1fr) minmax(240px, 300px);
     min-height: 0;
 }
 
@@ -393,8 +426,15 @@ a.ghost-btn:hover {
     padding: 0.65rem 0.7rem 0.75rem;
     overflow-y: auto;
     background: rgba(8, 32, 22, 0.55);
-    border-right: 1px solid rgba(212, 177, 90, 0.25);
     min-height: 0;
+}
+
+.sidebar-left {
+    border-right: 1px solid rgba(212, 177, 90, 0.25);
+}
+
+.sidebar-right {
+    border-left: 1px solid rgba(212, 177, 90, 0.25);
 }
 
 .game-stage {
@@ -713,6 +753,14 @@ a.ghost-btn:hover {
     color: var(--felt-deep);
 }
 
+.game-console {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-height: 0;
+    flex: 1 1 auto;
+}
+
 .turn-banner {
     margin: 0;
     text-align: left;
@@ -725,6 +773,51 @@ a.ghost-btn:hover {
     border-radius: 6px;
     border-left: 4px solid var(--gold);
     flex-shrink: 0;
+}
+
+.game-log {
+    list-style: none;
+    margin: 0;
+    padding: 0.45rem 0.55rem;
+    background: rgba(8, 32, 22, 0.45);
+    border: 1px solid rgba(212, 177, 90, 0.22);
+    border-radius: 6px;
+    overflow-y: auto;
+    min-height: 7.5rem;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+}
+
+.game-log:empty::after {
+    content: "Acá se va a contar la mano.";
+    color: rgba(246, 236, 212, 0.45);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.game-log li {
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: rgba(246, 236, 212, 0.82);
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(246, 236, 212, 0.08);
+}
+
+.game-log li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+    color: var(--cream);
+    font-weight: 800;
+}
+
+.game-log li.is-lead {
+    color: var(--gold);
+}
+
+.game-log li.is-close {
+    color: #f3e5ab;
 }
 
 .table-wrap {
@@ -1175,22 +1268,46 @@ a.ghost-btn:hover {
     opacity: 1;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 980px) {
     #game-screen {
         overflow: auto;
     }
 
     .game-body {
         grid-template-columns: 1fr;
-        grid-template-rows: auto minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto auto;
     }
 
-    .game-sidebar {
+    .sidebar-left {
+        order: 3;
         border-right: 0;
-        border-bottom: 1px solid rgba(212, 177, 90, 0.25);
+        border-top: 1px solid rgba(212, 177, 90, 0.25);
         max-height: none;
         overflow: visible;
         padding: 0.55rem 0.7rem;
+    }
+
+    .sidebar-right {
+        order: 2;
+        border-left: 0;
+        border-top: 1px solid rgba(212, 177, 90, 0.25);
+        max-height: none;
+        overflow: visible;
+        padding: 0.55rem 0.7rem;
+    }
+
+    .game-stage {
+        order: 1;
+    }
+
+    .game-console {
+        flex: 0 0 auto;
+    }
+
+    .game-log {
+        max-height: 8rem;
+        min-height: 5rem;
+        flex: 0 0 auto;
     }
 
     .score-board-rows {

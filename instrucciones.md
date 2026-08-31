@@ -1,12 +1,14 @@
 # Yo Soy El Rey — Reglas
 
-Juego de cartas para **2 a 6 jugadores**. En esta versión digital, vos jugás contra la IA.
+Juego de cartas para **2 a 6 jugadores**. En esta versión digital podés jugar solo o en mesa de varios.
+
+El texto completo, con ejemplos y consejos juntos, está en [`reglamento.md`](reglamento.md). Solo cómo pensar cada jugada: [`consejos.md`](consejos.md).
 
 ## Objetivo
 
-Ganar **rondas** y acumular puntos. El primero en llegar a **21** gana la partida.
+Ganar **rondas** y acumular puntos. El primero en llegar a **40** gana la partida.
 
-Una ronda se **cierra** cuando ganás una mano **y esa era tu última carta**. Entonces se suman los puntos y, si nadie llegó a 21, se vuelve a **repartir**.
+Una ronda se **cierra** cuando ganás una mano **y esa era tu última carta**. Entonces se suman los puntos y, si nadie llegó a 40, se vuelve a **repartir**.
 
 Si tirás la última carta **sin ganar** la mano, no cerrás: en esa ronda ya no jugás. Recién en la ronda siguiente (nuevo reparto) volvés a recibir cartas.
 
@@ -29,19 +31,20 @@ Orden de mayor a menor:
 ## Cómo va una mano
 
 1. El jugador de turno elige una carta de su mano. Esa carta es el **Rey** y **fija el palo**.
-2. En tu turno **elegís** una de estas:
-   - **Seguir el palo:** tirá **una** carta de ese palo para competir. El resto se **guarda**.
-   - **Derrocar:** el mismo número de otro palo. El palo cambia (ver abajo).
-   - **Comodín:** gana a cualquier Rey. Podés tirarlo aunque tengas el palo.
-   - **Descartar:** tirá otra carta. Esa no gana (salvo que derroque). Después de la mano **podés robar una del pozo**.
-   - **Pasar:** no tirás nada. No competís esta mano y **te guardás todas las cartas**.
-3. Seguir el palo **no es obligatorio**. Si tu carta del palo no gana, suele convenir pasar o descartar otra, y guardar ese palo para más adelante.
-4. Si derrocás, el palo cambia y cada uno vuelve a elegir sobre el palo nuevo.
-5. Cuando cada jugador jugó o pasó para el Rey vigente, se decide el ganador. Solo cuenta ese palo, más cualquier **comodín**. El ganador elige el próximo Rey.
+2. Los turnos **siguen**. En el tuyo podés:
+   - **Tirar otra del palo** para intentar ir ganando (aunque ya hayas tirado una).
+   - **Derrocar:** el mismo número de otro palo. El palo cambia y la mano sigue.
+   - **Comodín:** gana a cualquier Rey.
+   - **Pasar** o **descartar** (otra carta): **se cierra la mano**. Gana quien iba ganando.
+3. Ejemplo: declarás **5♠**. El otro tira **6♠** y va ganando. Te toca de nuevo: podés pasar (gana el 6) o tirar el **8♠** y pasar vos a ganar.
+4. Si descartás, después **podés robar del pozo**. Si pasás, no pescás.
+5. El ganador elige el próximo Rey. Solo cuentan las cartas del palo vigente y los comodines.
 
-Si el Rey es un **comodín**, no hay palo que seguir: quien tenga el otro está obligado a tirarlo; el resto puede **descartar** o **pasar**. No se puede derrocar.
+Si el Rey es un **comodín**, no hay palo que seguir: quien tenga el otro está obligado a tirarlo; el resto puede **descartar** o **pasar** (se cierra). No se puede derrocar.
 
-El robo del pozo es **optativo** y recién **después** de la mano, solo si **descartaste**. Pasar no pesca. Si querés cerrar, no robes. Si el pozo está vacío, no se roba. Quien se quedó sin cartas no pesca: o cerró, o en esa ronda ya no juega.
+El robo del pozo es **optativo** y recién **después** de la mano, solo si **descartaste**. Si querés cerrar, no robes. Quien se quedó sin cartas no pesca: o cerró, o en esa ronda ya no juega.
+
+**Si el pozo se acaba:** no se vuelve a mezclar en esa ronda. Las cartas ya jugadas no vuelven al pozo. Se sigue con lo que cada uno tiene en la mano. Descartar sigue cerrando la mano, pero **no pescás**. Recién cuando alguien **cierra la ronda** (gana con su última carta) se baraja de nuevo y se reparte.
 
 ---
 
@@ -53,9 +56,9 @@ Un Rey se **derroca** cuando alguien juega el **mismo número** en **otro palo**
 - Pedro tira **J♥** y, en ese momento, iría ganando (J > 9).
 - María tira **9♠**: mismo 9, otro palo. **Derroca**.
 - El Rey pasa a ser **9♠**. Los corazones **dejan de contar**.
-- A partir de ahí cada uno **elige de nuevo** sobre picas: seguir, derrocar, descartar o pasar. María, que ya tiró el 9♠, no tira más. Si María gana esa mano, suma **2** (derrocó y ganó).
+- A partir de ahí la mano **sigue en picas**: se puede tirar otra pica, derrocar de nuevo, pasar o descartar. Si María gana esa mano, suma **2** (derrocó y ganó).
 
-El derrocamiento es **válido en tu turno** aunque todavía te quede el palo viejo: el mismo número de otro palo siempre se puede jugar. Si descartás y esa carta es el mismo número, también derroca. Si tenés el palo y el otro 9, **elegís**: seguir con corazones, derrocar, descartar otra o pasar.
+El derrocamiento es **válido en tu turno** aunque todavía te quede el palo viejo. Si tenés el palo y el otro 9, **elegís**: seguir, derrocar, pasar o descartar.
 
 Se puede derrocar **más de una vez** en la misma mano: 9♥ → 9♠ → 9♦, y así. Hay cuatro palos; de un mismo número, el primero es el Rey y quedan hasta **tres** derrocamientos.
 
@@ -68,18 +71,25 @@ El comodín **no derroca**: no tiene número. Si el Rey es un comodín, no hay n
 Solo cuentan las cartas del **palo vigente** (el del Rey actual). Lo que se tiró del palo derrocado **no suma**.
 
 - **Regla normal:** gana la más alta de ese palo. **K > Q > J > 10 > 9 > 8 > 7 > 6 > 5 > 4 > 3 > 2 > A**.
-- **La media:** si **declaraste un 6** como Rey, no gana la más alta: gana lo más cerca del 6 (ver abajo).
+- **La media:** si **declaraste un 6** como Rey, ese 6 ya es el centro y **gana la mano** (salvo comodín u otro 6 que derroque). No es una carrera para acercarse después.
 - **Comodín:** hay solo **2**. Gana a **cualquier Rey**, aunque se haya tirado antes de un derrocamiento. Podés tirarlo aunque tengas el palo. Si salen los dos, gana el **último**. Si el Rey es un comodín, quien tenga el otro **está obligado** a jugarlo.
 
 ---
 
 ## La media
 
-El 6 está **en el medio** del mazo: arriba quedan K, Q, J, 10, 9, 8, 7 y abajo 5, 4, 3, 2, A. Por eso, si lo declarás Rey, la mano no se juega “a la más alta”. Se juega **a quién se acerca más al 6**.
+El 6 está **en el medio** del mazo: arriba quedan K, Q, J, 10, 9, 8, 7 y abajo 5, 4, 3, 2, A. Por eso, si lo declarás Rey, la mano no se juega “a la más alta”. Se juega **a quién está más cerca del 6**.
 
-**Cuándo vale.** Solo si el Rey de esa mano **es un 6 que alguien declaró**. No vale si el 6 quedó como Rey por un derrocamiento.
+**Cuándo vale.** Solo si el Rey de esa mano **es un 6 que alguien declaró**. No vale si el 6 quedó como Rey por un derrocamiento. Tirar un 6 después, siguiendo el palo, no activa la media.
 
-**Cómo se gana.** De las cartas del palo vigente, gana la de **menor distancia** al 6. El As vale 1.
+**Cómo se gana esa mano.** El 6 declarado **ya es el centro** (distancia 0). Hay un solo 6 de ese palo: nadie puede acercarse más. Quien lo declaró **va ganando**. El 7, el 5 o el K del mismo palo pierden: están más lejos. No hace falta tirar otra carta “más cerca”. Se cierra cuando alguien **pasa** o **descarta**, y la mano es de quien declaró el 6.
+
+Los únicos que te la sacan:
+
+- un **comodín** (le gana al 6);
+- **otro 6** de otro palo: **derroca**, la media **se cae** y a partir de ahí gana la más alta del palo nuevo.
+
+**Distancias** (el As vale 1), por si dos cartas compiten entre sí sin el 6, o para ver por qué el K acá no vale:
 
 | Carta | Distancia | ¿Qué tan cerca? |
 |---|---|---|
@@ -104,8 +114,8 @@ Un **comodín** le gana igual a la media.
 
 - **+1** por cada mano que ganás.
 - **+2** si **derrocaste y ganaste** esa mano.
-- Si **cerrás la ronda** (ganás esa mano con tu última carta): esos puntos de la mano, **más +5**, **más +1** por cada carta que les queda a los demás.
-- Primero en **21** gana la partida. Si hay empate en 21 o más, se juega una ronda extra.
+- Si **cerrás la ronda** (ganás esa mano con tu última carta): esos puntos de la mano, **más +3**, **más +1** por cada carta que les queda a los demás, **hasta +4**.
+- Primero en **40** gana la partida. Si hay empate en 40 o más, se juega una ronda extra.
 
 ---
 
@@ -122,34 +132,35 @@ El Rey es **K♥**. Hay que jugar corazones. Nadie derroca.
 | Marta | A♥       | Sí |
 | Ana   | 9♠       | No: es descarte (no es un K de otro palo) |
 
-**Ganás vos.** De las cartas de corazones, **K > Q > A**. El As es la más baja. El 9♠ de Ana no es corazón y no es un K, así que no derroca ni gana. Ana **no estaba obligada** a descartar: podría haber pasado y guardado el 9♠.
+**Ganás vos.** De las cartas de corazones, **K > Q > A**. Si Ana descarta el 9♠, se cierra la mano (y después puede pescar). Si pasa, también se cierra, sin pescar.
 
 ---
 
-### Ejemplo A2 — Pasar para no quemar una carta
+### Ejemplo A2 — Pasar cierra la mano
 
 El Rey es **Q♥**. Vos tenés **3♥** (no le gana a la Q) y **K♠**, que querés declarar después.
 
 | Jugador | Qué hace |
 |---|---|
 | Luis | Declaró Q♥. |
-| Vos  | **Pasás.** No tirás el 3♥. |
+| Vos  | **Pasás.** Se cierra la mano. |
 
-**Gana Luis.** No competiste, pero te quedás el 3♥ y el K♠. Si tirabas el 3, perdías una carta sin chance de ganar la mano.
+**Gana Luis** con la Q. Te quedás el 3♥ y el K♠. Descartar también cierra; en ese caso después podés pescar del pozo.
 
 ---
 
-### Ejemplo B — Una carta del palo
+### Ejemplo B — Seguir tirando del palo
 
-El Rey es **9♠**. Vos declaraste con el 9♠ y todavía tenés **3♠**.
+Declarás el Rey con **5♠**. Luis responde **6♠** y va ganando. Te toca de nuevo y todavía tenés el **8♠**.
 
 | Orden | Jugador | Qué hace |
 |---|---|---|
-| 1 | Vos   | Tirás el 9♠ (Rey). El 3♠ se queda en la mano. |
-| 2 | Luis  | Tiene K♠ y 2♠: tira el **K♠**. El 2 se guarda. |
-| 3 | Marta | No tiene picas: **puede** descartar **una** (Q♥) y después robar, o **pasar** y guardar la Q. |
+| 1 | Vos  | Tirás el 5♠ (Rey). |
+| 2 | Luis | Tira el 6♠. Va ganando. |
+| 3 | Vos  | Tirá el 8♠. Ahora vas ganando. |
+| 4 | Luis | Pasa. Se cierra la mano. |
 
-**Gana Luis** con el K♠, la más alta de las picas. Vos no ganás por haber puesto el Rey: el K le gana al 9. El 3♠ te sirve más adelante.
+**Ganás vos** con el 8♠. No es una carta por cabeza: mientras nadie pase ni descarte, se puede seguir tirando del palo.
 
 ---
 
@@ -159,7 +170,7 @@ El Rey es **9♠**. Vos declaraste con el 9♠ y todavía tenés **3♠**.
 2. **Pedro** tira **J♥**. Entre corazones, J > 9: Pedro iría ganando.
 3. **María** tira **9♠**. Mismo número, otro palo: **derroca**.
 4. El Rey vigente pasa a ser **9♠**. El 9♥ queda derrocado. El **J♥ ya no cuenta**.
-5. Ahora el palo es **picas**. María ya tiró el 9♠: no tira más. Juan y Pedro eligen de nuevo: una pica, derrocar, descartar o pasar.
+5. Ahora el palo es **picas**. La mano sigue: se puede tirar otra pica, derrocar, pasar o descartar.
 
 | Momento | Carta | Efecto |
 |---|---|---|
@@ -183,7 +194,7 @@ El Rey empieza en **4♥**.
 | Marta | 4♠ | Derroca. Ahora el Rey es 4♠. Los corazones no cuentan. |
 | Vos   | 4♦ | Derroca otra vez. Ahora el Rey es 4♦. Las picas no cuentan. |
 
-A partir del 4♦ cada uno elige de nuevo sobre diamantes (seguir, derrocar, descartar o pasar). Gana la más alta de diamantes (o un comodín). Luis se guarda el resto de corazones: el K♥ no cuenta en esta mano, pero puede declararlo después.
+A partir del 4♦ la mano sigue en diamantes. Gana la más alta de diamantes (o un comodín). El K♥ de Luis ya no cuenta en esta mano, pero puede declararlo después.
 
 ---
 
@@ -198,7 +209,7 @@ Declarás el Rey con **6♣**. Entra **la media**: no gana la más alta, gana lo
 | K♣ | 7 | El más lejos. El K acá no sirve |
 | A♣ (vale 1) | 5 | Lejos |
 
-**Gana el 6**, aunque en la mesa haya un K o un As del mismo palo.
+**Gana el 6.** No es una carrera: el 6 ya está en el centro. Luis y Marta no pueden “acercarse más”. Quien declaró pasa y se queda la mano.
 
 Si alguien tira **6♠**, derroca: el palo pasa a picas y **la media se cae**. Gana la pica más alta.
 
@@ -216,8 +227,9 @@ El comodín no cambia el palo: no derroca. Si alguien derroca el K♥ con otro K
 
 ### Ejemplo G — En pantalla
 
-1. Tocá una carta de **Tu mano**: se juega al instante. O tocá **Pasar** para no competir y guardar las cartas.
-2. Si te toca abrir, esa carta es el Rey. Si seguís el palo, tirás una y el resto se guarda.
-3. El mismo número de otro palo **derroca**: el Rey caído se tacha y el nuevo queda marcado. Cada uno vuelve a elegir.
-4. Si no seguiste el palo (descartaste), al final de la mano podés robar del pozo o pasar el pozo. Si pasaste la mano, no pescás.
-5. El **marcador** a la izquierda se actualiza en cada mano. El **?** abre estas reglas.
+1. Tocá una carta de **Tu mano**: se juega al instante. Si te toca de nuevo, podés tirar otra del palo.
+2. **Pasar** o **descartar** cierra la mano. Gana quien iba arriba. Si descartás, después podés pescar del pozo.
+3. El mismo número de otro palo **derroca**: el Rey caído se tacha y la mano sigue en el palo nuevo.
+4. La **consola** de la derecha cuenta cada jugada y te dice el siguiente paso. El **?** abre estas reglas.
+
+Más ideas de juego, con la media, el cierre y el pozo, en [`consejos.md`](consejos.md). Reglamento completo: [`reglamento.md`](reglamento.md).

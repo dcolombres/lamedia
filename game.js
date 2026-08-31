@@ -1,8 +1,9 @@
 const POINTS_PER_TRICK = 1;
 const POINTS_FOR_OVERTHROW_WIN = 2;
-const POINTS_FOR_CLOSE = 5;
+const POINTS_FOR_CLOSE = 3;
 const POINTS_PER_LEFT = 1;
-const POINTS_TO_WIN = 21;
+const POINTS_LEFT_CAP = 4;
+const POINTS_TO_WIN = 40;
 const PASS_PLAY = { pass: true };
 
 class Card {
@@ -192,14 +193,16 @@ class Game {
         this.kingHistory = [];
         this.deal = 1;
         this.sixRuleActive = false;
+        this.handOver = false;
         this.overthrowers = new Set();
         this.drawEligible = new Set();
         this.pendingHandWinner = null;
         this.scoreFlash = new Map();
-        this.rulesReturnScreen = 'start-screen';
+        this.helpReturnScreen = 'start-screen';
         this.tutorialStep = 0;
         this.toastTimer = null;
         this.turnTimer = null;
+        this.feed = [];
 
         this.initializeEventListeners();
         this.restorePlayerName();
@@ -215,10 +218,13 @@ class Game {
         this.on('start-game', 'click', () => this.startGame());
         this.on('mode-solo', 'click', () => this.setGameMode('solo'));
         this.on('mode-table', 'click', () => this.setGameMode('table'));
-        this.on('show-rules', 'click', (event) => this.showRules(event));
-        this.on('back-to-start', 'click', (event) => this.backFromRules(event));
+        this.on('show-rules', 'click', (event) => this.showHelp('rules-screen', event));
+        this.on('show-tips', 'click', (event) => this.showHelp('tips-screen', event));
+        this.on('back-to-start', 'click', (event) => this.backFromHelp(event));
+        this.on('back-from-tips', 'click', (event) => this.backFromHelp(event));
+        this.on('tips-to-rules', 'click', (event) => this.showHelp('rules-screen', event));
         this.on('show-tutorial', 'click', () => this.openTutorial());
-        this.on('help-ingame', 'click', (event) => this.showRules(event));
+        this.on('help-ingame', 'click', (event) => this.showHelp('rules-screen', event));
         this.on('new-game-ingame', 'click', () => this.playAgain());
         this.on('play-again', 'click', () => this.playAgain());
         this.on('back-to-menu', 'click', () => this.backToMenu());
@@ -268,17 +274,22 @@ class Game {
         }
     }
 
-    showRules(event) {
+    showHelp(screenId, event) {
         if (event) event.preventDefault();
         const active = document.querySelector('.screen.active');
-        this.rulesReturnScreen = (active && active.id !== 'rules-screen') ? active.id : 'start-screen';
-        this.showScreen('rules-screen');
+        const helpIds = ['rules-screen', 'tips-screen'];
+        if (active && !helpIds.includes(active.id)) {
+            this.helpReturnScreen = active.id;
+        } else if (!this.helpReturnScreen) {
+            this.helpReturnScreen = 'start-screen';
+        }
+        this.showScreen(screenId);
     }
 
-    backFromRules(event) {
+    backFromHelp(event) {
         if (event) event.preventDefault();
-        this.showScreen(this.rulesReturnScreen || 'start-screen');
-        this.rulesReturnScreen = 'start-screen';
+        this.showScreen(this.helpReturnScreen || 'start-screen');
+        this.helpReturnScreen = 'start-screen';
     }
 
     toast(message) {
@@ -288,6 +299,33 @@ class Game {
         el.classList.add('show');
         clearTimeout(this.toastTimer);
         this.toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+    }
+
+    logEvent(message, kind = '') {
+        this.feed.push({ message, kind });
+        if (this.feed.length > 14) this.feed.shift();
+        this.renderLog();
+    }
+
+    clearLog() {
+        this.feed = [];
+        this.renderLog();
+    }
+
+    renderLog() {
+        const el = document.getElementById('game-log');
+        if (!el) return;
+        el.innerHTML = '';
+        this.feed.forEach((entry, index) => {
+            const line = document.createElement('li');
+            const kind = typeof entry === 'string' ? '' : entry.kind;
+            const message = typeof entry === 'string' ? entry : entry.message;
+            if (kind) line.classList.add(`is-${kind}`);
+            if (index === this.feed.length - 1) line.classList.add('is-latest');
+            line.textContent = message;
+            el.appendChild(line);
+        });
+        el.scrollTop = el.scrollHeight;
     }
 
     later(fn, ms, slot = 'turnTimer') {
@@ -306,7 +344,7 @@ class Game {
     }
 
     maybeShowFirstTutorial() {
-        if (window.location && window.location.hash === '#rules-screen') return;
+        if (window.location && (window.location.hash === '#rules-screen' || window.location.hash === '#tips-screen')) return;
         try {
             if (localStorage.getItem('yoSoyElRey.tutorialSeen')) return;
         } catch {
@@ -386,8 +424,8 @@ class Game {
         if (tableSetup) tableSetup.hidden = mode !== 'table';
         if (hint) {
             hint.textContent = mode === 'solo'
-                ? '12 cartas, pozo y dos comodines. Sumá hasta 21 puntos.'
-                : '8 cartas cada uno. El pozo queda para pescar. Primero en 21 se lleva la corona.';
+                ? '12 cartas, pozo y dos comodines. Sumá hasta 40 puntos.'
+                : '8 cartas cada uno. El pozo queda para pescar. Primero en 40 se lleva la corona.';
         }
     }
 
@@ -404,9 +442,12 @@ class Game {
         const starter = this.current();
         const human = this.human();
         const rivals = this.players.filter(player => !player.isHuman).map(player => player.name);
-        this.toast(playerCount === 2
+        const opening = playerCount === 2
             ? `${human.name} vs ${rivals[0]}. Primero en ${this.pointsToWin()}. Empieza ${starter.name}.`
-            : `Mesa de ${playerCount}. Primero en ${this.pointsToWin()}. Empieza ${starter.name}.`);
+            : `Mesa de ${playerCount}. Primero en ${this.pointsToWin()}. Empieza ${starter.name}.`;
+        this.clearLog();
+        this.logEvent(opening, 'lead');
+        this.toast(opening);
         this.later(() => this.checkAITurn(), 700, 'turnTimer');
     }
 
@@ -429,6 +470,7 @@ class Game {
         this.kingStartIndex = 0;
         this.kingHistory = [];
         this.sixRuleActive = false;
+        this.handOver = false;
         this.overthrowers = new Set();
         this.drawEligible = new Set();
         this.pendingHandWinner = null;
@@ -502,10 +544,17 @@ class Game {
             } else if (this.gamePhase === 'round-end' && this.trickWinner) {
                 suit.textContent = `Gana ${this.trickWinner.name}`;
             } else if (this.currentKing && this.currentKing.isJoker) {
-                suit.textContent = 'Rey comodín';
+                const who = this.currentLeadPlayer();
+                suit.textContent = who ? `Va ${who.name} · comodín` : 'Rey comodín';
             } else if (this.currentKing) {
-                const six = this.sixRuleActive ? ' · la media' : '';
-                suit.textContent = `Palo ${this.currentKing.suit} · ${this.currentKing.value}${six}`;
+                const six = this.sixRuleActive ? ' · media' : '';
+                const who = this.currentLeadPlayer();
+                const lead = this.currentLeadCard();
+                if (who && lead && this.gamePhase === 'playing-cards') {
+                    suit.textContent = `Va ${who.name} · ${lead.label()}${six}`;
+                } else {
+                    suit.textContent = `Palo ${this.currentKing.suit} · ${this.currentKing.value}${six}`;
+                }
             } else {
                 suit.textContent = this.forceKingCard ? 'Abrir con K♥' : 'Esperando Rey';
             }
@@ -561,7 +610,7 @@ class Game {
             const backs = `<div class="backs">${'<span class="card-back"></span>'.repeat(Math.min(player.hand.length, 12))}</div>`;
             seat.innerHTML = `
                 <div class="seat-name">${escapeHtml(player.name)}</div>
-                <div class="seat-role">IA</div>
+                <div class="seat-role">Rival</div>
                 ${backs}
             `;
             area.appendChild(seat);
@@ -674,27 +723,33 @@ class Game {
                 : 'Tu turno: tocá una carta para declararla Rey. Esa carta marca el palo.';
         } else if (this.gamePhase === 'playing-cards' && this.currentKing && human) {
             const hasJoker = human.hand.some(card => card.isJoker);
+            const lead = this.currentLeadCard();
+            const leadPlayer = this.currentLeadPlayer();
+            const leadName = leadPlayer ? leadPlayer.name : 'el Rey';
+            const leadLabel = lead ? lead.label() : (this.currentKing && this.currentKing.label());
+            const closeNote = ' Pasar o descartar cierra la mano.';
+            const ahead = leadPlayer && leadPlayer.isHuman
+                ? `Vas ganando con ${leadLabel}. Pasá para llevarte la mano, o tirá otra de ${this.currentKing.suit}.`
+                : null;
             if (this.currentKing.isJoker) {
                 text = hasJoker
                     ? 'El Rey es un comodín: si tenés el otro, tenés que tirarlo.'
-                    : 'Rey comodín. Podés descartar una carta, o pasar y guardar la mano. Solo otro comodín gana.';
+                    : `Va ganando ${leadName}. Descartá o pasá: se cierra la mano.`;
             } else if (human.hasSuit(this.currentKing.suit)) {
                 const left = human.hand.filter(card => card.suit === this.currentKing.suit).length;
                 const coups = human.overthrowCards(this.currentKing);
                 const coupHint = coups.length
-                    ? ` Derrocá con ${this.currentKing.value} de otro palo si querés cambiar el palo.`
+                    ? ` O derrocá con ${this.currentKing.value} de otro palo.`
                     : '';
-                text = `Elegí: una de ${this.currentKing.suit} para competir (tenés ${left}), descartar otra, o pasar y guardarlas.${coupHint}`;
+                text = ahead
+                    || `Va ganando ${leadName} con ${leadLabel}. Podés tirar otra de ${this.currentKing.suit} (tenés ${left}).${coupHint}${closeNote}`;
             } else {
                 const coups = human.overthrowCards(this.currentKing);
-                const drawHint = this.deck.size()
-                    ? ' Si descartás, después podés robar del pozo.'
-                    : '';
                 text = coups.length
-                    ? `No tenés ${this.currentKing.suit}. Derrocá con ${this.currentKing.value} de otro palo, descartá, o pasá.`
+                    ? `Va ganando ${leadName}. Derrocá con ${this.currentKing.value} de otro palo, o pasá / descartá y se cierra.`
                     : hasJoker
-                        ? `No tenés ${this.currentKing.suit}. Comodín para ganar, descartá, o pasá.${drawHint}`
-                        : `No tenés ${this.currentKing.suit}. Descartá una carta o pasá para no competir.${drawHint}`;
+                        ? `Va ganando ${leadName}. Comodín para ganar, o pasá / descartá y se cierra.`
+                        : `Va ganando ${leadName} con ${leadLabel}. No tenés ${this.currentKing.suit}: pasá o descartá y se cierra la mano.`;
             }
         } else if (this.gamePhase === 'round-end' && this.trickWinner) {
             text = `${this.trickWinner.name} ganó la mano.`;
@@ -705,7 +760,9 @@ class Game {
             rack.textContent = this.gamePhase === 'drawing'
                 ? (this.drawEligible.has(human) ? '¿Pescás del pozo?' : 'Pozo')
                 : this.isHumanTurn()
-                    ? (this.gamePhase === 'playing-cards' && this.canPass(human) ? 'Toca una carta o pasá' : 'Toca una carta')
+                    ? (this.gamePhase === 'playing-cards' && this.canPass(human)
+                        ? 'Tirá, pasá o descartá'
+                        : 'Toca una carta')
                     : 'Espera';
         }
     }
@@ -742,7 +799,9 @@ class Game {
         this.drawEligible = new Set();
         this.gamePhase = 'playing-cards';
         const sixNote = this.sixRuleActive ? ' Entra la media: gana lo más cerca del 6.' : '';
-        this.toast(`${player.name} declara el Rey: ${played.label()}. Cada uno elige: seguir el palo, derrocar, descartar o pasar.${sixNote}`);
+        this.handOver = false;
+        this.logEvent(`${player.name} declara el Rey: ${played.label()}${this.sixRuleActive ? ' · entra la media' : ''}`, 'lead');
+        this.toast(`Rey ${played.label()}.${sixNote}`);
         this.record('king', { player: player.name, card: played.toString(), six: this.sixRuleActive });
         this.continueAfterPlay();
     }
@@ -768,16 +827,21 @@ class Game {
         const followed = king && !king.isJoker && played.suit === king.suit;
         if (!played.isJoker && !overthrew && !followed) {
             this.drawEligible.add(player);
-        }
-        if (overthrew) {
+            this.handOver = true;
+            this.logEvent(`${player.name} descarta ${played.label()} · se cierra la mano`, 'close');
+            this.toast(`${player.name} descarta y se cierra la mano.`);
+        } else if (overthrew) {
             this.currentKing = played;
             this.kingStartIndex = this.playedCards.length - 1;
             this.kingHistory.push(played);
             const droppedMedia = this.sixRuleActive;
             this.sixRuleActive = false;
             this.overthrowers.add(player);
-            this.toast(`${player.name} derroca al Rey: ahora es ${played.label()}. Cada uno elige de nuevo: palo ${played.suit}, derrocar, descartar o pasar.${droppedMedia ? ' La media se cae.' : ''}`);
+            this.logEvent(`${player.name} derroca: ahora Rey ${played.label()}${droppedMedia ? ' · se cae la media' : ''}`, 'lead');
+            this.toast(`${player.name} derroca. Rey ${played.label()}.`);
             this.record('overthrow', { player: player.name, card: played.toString() });
+        } else {
+            this.logEvent(`${player.name} tira ${played.label()} · ${this.leadStatus() || 'en juego'}`);
         }
         this.continueAfterPlay();
     }
@@ -839,7 +903,9 @@ class Game {
             return;
         }
         this.playedCards.push({ card: null, player, passed: true });
-        this.toast(`${player.name} pasa: guarda las cartas y no compite esta mano.`);
+        this.handOver = true;
+        this.logEvent(`${player.name} pasa · se cierra la mano. ${this.leadStatus()}`.trim(), 'close');
+        this.toast(`${player.name} pasa. Se cierra la mano.`);
         this.record('pass', { player: player.name });
         this.continueAfterPlay();
     }
@@ -859,12 +925,14 @@ class Game {
     }
 
     playerFinishedHand(player) {
-        if (!player || player.isEmpty()) return true;
-        if (!this.currentKing) return false;
-        return this.hasPlayedSinceCurrentKing(player);
+        return !player || player.isEmpty();
     }
 
     roundIsComplete() {
+        if (this.gamePhase === 'playing-cards' && this.handOver) return true;
+        if (this.gamePhase === 'playing-cards' && this.playedCards.some(entry => entry.card)) {
+            return this.players.every(player => player.isEmpty());
+        }
         return this.players.every(player => this.playerFinishedHand(player));
     }
 
@@ -884,7 +952,12 @@ class Game {
             this.later(() => this.endRound(), 900, 'resolveTimer');
             return;
         }
-        if (this.playerFinishedHand(this.current())) {
+        if (this.gamePhase === 'playing-cards') {
+            if (!this.nextActivePlayer()) {
+                this.later(() => this.endRound(), 900, 'resolveTimer');
+                return;
+            }
+        } else if (this.playerFinishedHand(this.current())) {
             this.nextActivePlayer();
         }
         this.updateUI();
@@ -987,6 +1060,23 @@ class Game {
         return best;
     }
 
+    currentLeadPlayer() {
+        const lead = this.currentLeadCard();
+        if (!lead) {
+            const kingEntry = this.playedCards.find(entry => entry.card === this.currentKing);
+            return kingEntry ? kingEntry.player : null;
+        }
+        const matches = this.playedCards.filter(entry => entry.card === lead);
+        return matches.length ? matches[matches.length - 1].player : null;
+    }
+
+    leadStatus() {
+        const who = this.currentLeadPlayer();
+        const card = this.currentLeadCard() || this.currentKing;
+        if (!who || !card) return '';
+        return `Va ganando ${who.name} con ${card.label()}`;
+    }
+
     chooseAIKing(player) {
         if (this.forceKingCard) {
             const forced = player.hand.find(card => card.toString() === this.forceKingCard);
@@ -1016,6 +1106,7 @@ class Game {
         const lead = this.currentLeadCard();
         const overthrow = player.overthrowCards(king);
         const jokerOut = this.playedCards.some(entry => entry.card && entry.card.isJoker);
+        const winning = this.currentLeadPlayer() === player;
 
         if (king && king.isJoker && jokers.length) return jokers[0];
 
@@ -1024,6 +1115,7 @@ class Game {
             if (last.isJoker || this.wouldOverthrow(last, king) || this.cardBeats(last, lead, king)) {
                 return last;
             }
+            if (winning && king && !king.isJoker && last.suit === king.suit) return last;
             return PASS_PLAY;
         }
 
@@ -1033,6 +1125,8 @@ class Game {
             if (winners.length) return this.lowestOf(winners);
         }
 
+        if (winning) return PASS_PLAY;
+
         if (overthrow.length && !jokerOut) return overthrow[0];
 
         const threatClose = this.players.some(other => other !== player && other.hand.length <= 1);
@@ -1040,10 +1134,6 @@ class Game {
             return jokers[0];
         }
 
-        if (this.deck.size() > 0 && hand.length >= 7) {
-            const junk = this.chooseDiscard(player, king);
-            if (junk) return junk;
-        }
         return PASS_PLAY;
     }
 
@@ -1094,28 +1184,39 @@ class Game {
             const leftover = this.players.reduce((sum, player) => (
                 player === winner ? sum : sum + player.hand.length
             ), 0);
-            const closePts = POINTS_FOR_CLOSE + leftover * POINTS_PER_LEFT;
+            const leftoverPts = Math.min(leftover, POINTS_LEFT_CAP) * POINTS_PER_LEFT;
+            const closePts = POINTS_FOR_CLOSE + leftoverPts;
             winner.score += closePts;
             this.bumpScore(winner);
             this.updateUI();
             const champ = this.leader();
             const tied = this.players.filter(player => player.score === champ.score);
             const totalPts = trickPts + closePts;
-            this.record('close', { player: winner.name, leftover, totalPts, score: winner.score });
+            this.record('close', {
+                player: winner.name,
+                leftover,
+                leftoverPts,
+                closeBonus: POINTS_FOR_CLOSE,
+                totalPts,
+                score: winner.score,
+            });
             if (champ.score >= this.pointsToWin() && tied.length === 1) {
-                this.toast(`${winner.name} cierra la ronda (+${totalPts}) y gana la partida con ${champ.score}.`);
+                this.logEvent(`${winner.name} cierra (+${totalPts}) y gana la partida con ${champ.score}`, 'close');
+                this.toast(`${winner.name} cierra (+${totalPts}) y gana la partida con ${champ.score}.`);
                 this.later(() => this.endGame(champ), 1400, 'resolveTimer');
                 return;
             }
             const extra = champ.score >= this.pointsToWin()
                 ? ' Empate en el objetivo: ronda extra.'
                 : '';
-            this.toast(`${winner.name} cierra la ronda: +${totalPts} (${winner.score} pts).${extra}`);
+            this.logEvent(`${winner.name} cierra la ronda: +${trickPts} + ${POINTS_FOR_CLOSE} + ${leftoverPts} cartas = ${winner.score} pts`, 'close');
+            this.toast(`${winner.name} cierra: +${trickPts} de la mano, +${POINTS_FOR_CLOSE} y +${leftoverPts} por cartas (${winner.score} pts).${extra}`);
             this.later(() => this.beginNextDeal(), 1600, 'resolveTimer');
             return;
         }
 
         const why = overthrewAndWon ? 'derrocó y gana (+2)' : `gana la mano (+${trickPts})`;
+        this.logEvent(`${winner.name} ${why}`, 'lead');
         this.toast(`${winner.name} ${why}.`);
         this.later(() => this.startDrawPhase(winner), 1100, 'resolveTimer');
     }
@@ -1160,9 +1261,11 @@ class Game {
         player.addCard(card);
         this.flashStock();
         this.record('draw', { player: player.name, card: card.toString(), stock: this.deck.size() });
-        this.toast(player.isHuman
+        const drawn = player.isHuman
             ? `Pescaste ${card.label()}. Quedan ${this.deck.size()} en el pozo.`
-            : `${player.name} pesca del pozo. Quedan ${this.deck.size()}.`);
+            : `${player.name} pesca del pozo. Quedan ${this.deck.size()}.`;
+        this.logEvent(player.isHuman ? `Pescás ${card.label()} · pozo ${this.deck.size()}` : `${player.name} pesca · pozo ${this.deck.size()}`);
+        this.toast(drawn);
         this.updateUI();
         return card;
     }
@@ -1231,6 +1334,7 @@ class Game {
         this.kingHistory = [];
         this.forceKingCard = null;
         this.sixRuleActive = false;
+        this.handOver = false;
         this.overthrowers = new Set();
         this.drawEligible = new Set();
         this.pendingHandWinner = null;
@@ -1243,6 +1347,7 @@ class Game {
         this.gamePhase = 'choosing-king';
         this.updateUI();
         const starter = this.current();
+        this.logEvent(`Nueva ronda ${this.deal}. Empieza ${starter.name}.`, 'lead');
         this.toast(`Ronda ${this.deal}. Empieza ${starter.name}.`);
         this.later(() => this.checkAITurn(), 700, 'turnTimer');
     }
@@ -1256,6 +1361,7 @@ class Game {
         this.kingStartIndex = 0;
         this.kingHistory = [];
         this.sixRuleActive = false;
+        this.handOver = false;
         this.overthrowers = new Set();
         this.drawEligible = new Set();
         this.currentPlayerIndex = winnerIndex;
@@ -1346,6 +1452,7 @@ class Game {
         this.kingStartIndex = 0;
         this.kingHistory = [];
         this.sixRuleActive = false;
+        this.handOver = false;
         this.overthrowers = new Set();
         this.drawEligible = new Set();
         this.pendingHandWinner = null;
@@ -1355,7 +1462,9 @@ class Game {
         this.findInitialPlayer();
         this.gamePhase = 'choosing-king';
         this.showScreen('game-screen');
+        this.clearLog();
         this.updateUI();
+        this.logEvent('Nueva partida. Los puntos vuelven a cero.', 'lead');
         this.toast('Nueva partida. Los puntos vuelven a cero.');
         this.later(() => this.checkAITurn(), 700, 'turnTimer');
     }
@@ -1383,6 +1492,8 @@ if (typeof window !== 'undefined') {
     Game.POINTS_PER_TRICK = POINTS_PER_TRICK;
     Game.POINTS_FOR_OVERTHROW_WIN = POINTS_FOR_OVERTHROW_WIN;
     Game.POINTS_FOR_CLOSE = POINTS_FOR_CLOSE;
+    Game.POINTS_PER_LEFT = POINTS_PER_LEFT;
+    Game.POINTS_LEFT_CAP = POINTS_LEFT_CAP;
 }
 
 function bootGame() {

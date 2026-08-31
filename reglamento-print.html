@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Yo Soy El Rey — Reglamento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+@page {
+    size: A4;
+    margin: 16mm 15mm 18mm;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #f6ecd4;
+    color: #1c1914;
+}
+
+body {
+    font-family: Nunito, "Segoe UI", sans-serif;
+    font-size: 10.4pt;
+    line-height: 1.5;
+}
+
+.page {
+    max-width: 180mm;
+    margin: 0 auto;
+}
+
+/* Portada */
+.cover {
+    page-break-after: always;
+    height: 263mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 18mm 14mm;
+    background:
+        radial-gradient(900px 520px at 50% -8%, #1e7a52 0%, transparent 55%),
+        #0c3a28;
+    color: #f6ecd4;
+    margin: 0;
+    width: 100%;
+}
+
+.cover-mark {
+    font-size: 42pt;
+    color: #d4b15a;
+    line-height: 1;
+    margin: 0 0 10mm;
+}
+
+.cover-title,
+.cover h1 {
+    display: block !important;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 700;
+    font-size: 36pt;
+    letter-spacing: 0.04em;
+    color: #d4b15a;
+    margin: 0 0 4mm;
+    border: 0;
+    padding: 0;
+}
+
+.cover .subtitle {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 16pt;
+    color: #f6ecd4;
+    margin: 0 0 10mm;
+}
+
+.cover .lead {
+    max-width: 130mm;
+    margin: 0 auto 8mm;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: rgba(246, 236, 212, 0.92);
+}
+
+.cover .idea {
+    max-width: 128mm;
+    margin: 0 auto;
+    padding: 5mm 6mm;
+    border: 1px solid rgba(212, 177, 90, 0.45);
+    border-radius: 6px;
+    background: rgba(8, 32, 22, 0.35);
+    font-size: 10.5pt;
+}
+
+.cover-meta {
+    margin-top: 16mm;
+    font-size: 9pt;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #d4b15a;
+}
+
+/* Títulos */
+h1 {
+    display: none;
+}
+
+h2 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 700;
+    font-size: 18pt;
+    color: #0c3a28;
+    margin: 9mm 0 3.5mm;
+    padding-bottom: 1.6mm;
+    border-bottom: 1.5px solid #d4b15a;
+    page-break-after: avoid;
+}
+
+h3 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 700;
+    font-size: 13.5pt;
+    color: #145c3f;
+    margin: 6mm 0 2mm;
+    page-break-after: avoid;
+}
+
+h2:first-of-type {
+    margin-top: 2mm;
+}
+
+p {
+    margin: 0 0 2.6mm;
+}
+
+strong {
+    font-weight: 800;
+}
+
+a {
+    color: #145c3f;
+    text-decoration: none;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 3mm;
+    padding-left: 5.5mm;
+}
+
+li {
+    margin-bottom: 1.2mm;
+}
+
+li ul, li ol {
+    margin-top: 1mm;
+    margin-bottom: 1mm;
+}
+
+/* Consejo */
+.tip {
+    background: #efe4c8;
+    border-left: 4px solid #d4b15a;
+    border-radius: 0 6px 6px 0;
+    padding: 3mm 4mm;
+    margin: 3mm 0 4mm;
+    page-break-inside: avoid;
+}
+
+.tip strong:first-child {
+    color: #0c3a28;
+    letter-spacing: 0.04em;
+}
+
+.result {
+    background: #e7f0e8;
+    border-left: 4px solid #145c3f;
+    border-radius: 0 6px 6px 0;
+    padding: 3mm 4mm;
+    margin: 3mm 0 4mm;
+    page-break-inside: avoid;
+}
+
+/* Orden de cartas */
+.rank-line {
+    display: block;
+    text-align: center;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 13pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #0c3a28;
+    background: #efe4c8;
+    border: 1px solid rgba(212, 177, 90, 0.5);
+    border-radius: 6px;
+    padding: 3mm 4mm;
+    margin: 3mm 0 4mm;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2.5mm 0 4.5mm;
+    font-size: 9.6pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    text-align: left;
+    padding: 2mm 2.4mm;
+    border-bottom: 1px solid rgba(28, 25, 20, 0.12);
+    vertical-align: top;
+}
+
+th {
+    font-weight: 800;
+    color: #0c3a28;
+    background: rgba(20, 92, 63, 0.08);
+    border-bottom: 1.5px solid #d4b15a;
+}
+
+tr:nth-child(even) td {
+    background: rgba(246, 236, 212, 0.35);
+}
+
+/* Índice */
+#índice + ul,
+#índice + ol {
+    columns: 2;
+    column-gap: 10mm;
+    font-size: 10pt;
+}
+
+/* Ejemplos */
+.example-title {
+    background: #0c3a28;
+    color: #f6ecd4;
+    display: inline-block;
+    padding: 1.4mm 4mm;
+    border-radius: 4px;
+    margin-top: 6mm;
+    border: 0;
+}
+
+.example-title + p {
+    page-break-after: avoid;
+}
+
+/* Pie */
+.colophon {
+    margin-top: 10mm;
+    padding-top: 4mm;
+    border-top: 1px solid rgba(212, 177, 90, 0.5);
+    font-size: 9pt;
+    color: #5c574e;
+}
+
+@media print {
+    body {
+        background: #f6ecd4;
+    }
+
+    .cover {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    h2, h3, table, .tip, .result, .rank-line {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header class="cover">
+        <p class="cover-mark" aria-hidden="true">♛</p>
+        <p class="cover-title">Yo Soy El Rey</p>
+        <p class="subtitle">Reglamento</p>
+        <p class="lead">Reglas, ejemplos y cómo pensar cada jugada. Para 2 a 6 jugadores. En la mesa digital podés jugar solo o con varios.</p>
+        <p class="idea">No es una carta por cabeza. La mano sigue hasta que alguien <strong>pasa</strong> o <strong>descarta</strong>. Quien iba ganando se la queda. Cada carta que tirás es una que no vas a poder declarar después.</p>
+        <p class="cover-meta">Primero en 40 · K♥ abre · la media · el pozo</p>
+    </header>
+    <main class="page">
+<h2 id="índice">Índice</h2>
+<ol>
+<li><a href="#objetivo">Objetivo</a></li>
+<li><a href="#preparación">Preparación</a></li>
+<li><a href="#cómo-va-una-mano">Cómo va una mano</a></li>
+<li><a href="#pasar-o-descartar">Pasar o descartar</a></li>
+<li><a href="#el-pozo">El pozo</a></li>
+<li><a href="#derrocamiento">Derrocamiento</a></li>
+<li><a href="#quién-gana-la-mano">Quién gana la mano</a></li>
+<li><a href="#la-media-el-6">La media (el 6)</a></li>
+<li><a href="#el-comodín">El comodín</a></li>
+<li><a href="#puntos">Puntos</a></li>
+<li><a href="#cerrar-la-ronda">Cerrar la ronda</a></li>
+<li><a href="#ejemplos">Ejemplos</a></li>
+<li><a href="#consejos">Consejos</a></li>
+<li><a href="#en-pantalla">En pantalla</a></li>
+</ol>
+
+<h2>Objetivo</h2>
+<p>Ganar <strong>rondas</strong> y acumular puntos. El primero en llegar a <strong>40</strong> gana la partida.</p>
+<p>Una ronda se <strong>cierra</strong> cuando ganás una mano <strong>y esa era tu última carta</strong>. Entonces se suman los puntos y, si nadie llegó a 40, se vuelve a <strong>repartir</strong>.</p>
+<p>Si tirás la última carta <strong>sin ganar</strong> la mano, no cerrás: en esa ronda ya no jugás. Recién en la ronda siguiente (nuevo reparto) volvés a recibir cartas.</p>
+<p class="tip"><strong>Consejo.</strong> Los +1 y +2 suman. El partido lo define <strong>cerrar</strong>: esos puntos de la mano, <strong>+3</strong> y hasta <strong>+4</strong> por las cartas que les quedan a los demás. No hace falta ganar todas las manos. Hay que ir sacando las baratas, guardar una salida que gane para cuando te quede una o dos cartas, y no inflarles la mano a los otros.</p>
+
+<h2>Preparación</h2>
+<ul>
+<li>Baraja francesa de <strong>54 cartas</strong>: corazones ♥, diamantes ♦, picas ♠, tréboles ♣ (del <strong>2</strong> al <strong>As</strong>) más <strong>2 comodines</strong>.</li>
+<li>De a 2: <strong>12 cartas</strong> cada uno. De a 3 o más: <strong>8 cartas</strong>. El resto queda en el <strong>pozo</strong>.</li>
+<li>Empieza quien tenga el <strong>Rey de corazones (K♥)</strong> y <strong>debe abrirlo como primer Rey de la ronda</strong> (al repartir). En las manos siguientes de esa ronda elige el ganador, sin obligación del K♥. Si el K♥ no se repartió, empieza quien tenga la carta más alta (elige libre). Los comodines no cuentan para decidir quién abre.</li>
+</ul>
+<p>Orden de mayor a menor:</p>
+<p class="rank-line">K &gt; Q &gt; J &gt; 10 &gt; 9 &gt; 8 &gt; 7 &gt; 6 &gt; 5 &gt; 4 &gt; 3 &gt; 2 &gt; A</p>
+<p>(J es la sota, Q la reina, K el rey. El <strong>K es la más alta</strong>. El <strong>As es la más baja</strong>.)</p>
+<p class="tip"><strong>Consejo.</strong> Al repartir, si tenés el <strong>K♥</strong> no elegís: lo tenés que abrir. No es un error. Juegalo y, si nadie tira comodín ni otro K, pasá. Esa primera mano suele ser tuya.</p>
+
+<h2>Cómo va una mano</h2>
+<ol>
+<li>El jugador de turno elige una carta de su mano. Esa carta es el <strong>Rey</strong> y <strong>fija el palo</strong>.</li>
+<li>Los turnos <strong>siguen</strong>. En el tuyo podés:
+   - <strong>Tirar otra del palo</strong> para intentar ir ganando (aunque ya hayas tirado una).
+   - <strong>Derrocar:</strong> el mismo número de otro palo. El palo cambia y la mano sigue.
+   - <strong>Comodín:</strong> gana a cualquier Rey.
+   - <strong>Pasar</strong> o <strong>descartar</strong> (otra carta): <strong>se cierra la mano</strong>. Gana quien iba ganando.</li>
+<li>Ejemplo: declarás <strong>5♠</strong>. El otro tira <strong>6♠</strong> y va ganando. Te toca de nuevo: podés pasar (gana el 6) o tirar el <strong>8♠</strong> y pasar vos a ganar.</li>
+<li>Si descartás, después <strong>podés robar del pozo</strong>. Si pasás, no pescás.</li>
+<li>El ganador elige el próximo Rey. Solo cuentan las cartas del palo vigente y los comodines.</li>
+</ol>
+<p>Si el Rey es un <strong>comodín</strong>, no hay palo que seguir: quien tenga el otro está obligado a tirarlo; el resto puede <strong>descartar</strong> o <strong>pasar</strong> (se cierra). No se puede derrocar.</p>
+<h3>Declarar el Rey</h3>
+<p>Cuando te toca elegir, no preguntes “¿cuál es mi carta más linda?”. Preguntá: <strong>¿con esta carta voy a poder pasar y llevarme la mano?</strong></p>
+<p><strong>Conviene declarar</strong></p>
+<ul>
+<li>Un <strong>K</strong> del palo que más tenés. El K es la más alta: salvo comodín u otro K que derroque, vas ganando. Después <strong>pasá</strong>.</li>
+<li>Un <strong>6</strong>, si querés una mano casi segura (ver <a href="#la-media-el-6">La media</a>).</li>
+<li>Una carta <strong>media-alta</strong> (10, J, Q) cuando te quedan más de ese palo para responder si te superan.</li>
+<li>Tu última carta, si gana: es el cierre.</li>
+</ul>
+<p><strong>No conviene declarar</strong></p>
+<ul>
+<li>Un 2, 3, 4 o As “para deshacerte”. El otro tira un 7 y te quedás sin la mano y sin la carta.</li>
+<li>Una figura suelta de un palo del que no tenés más: si te derrocan, no podés pelear el palo nuevo.</li>
+<li>El segundo comodín como Rey si el primero ya está en juego: el otro está obligado a tirarlo y te lo saca.</li>
+</ul>
+<p><strong>Orden práctico</strong></p>
+<ol>
+<li>¿Puedo cerrar ahora? Declará lo que gane y listo.</li>
+<li>¿Tengo K o 6 con los que pueda pasar en el próximo turno? Usalos.</li>
+<li>¿Tengo un palo largo (tres o más)? Declará alto de ese palo: si te suben, todavía podés responder.</li>
+<li>Si no, declará lo más alto que no te duela perder, y aceptá pasar si te ganan.</li>
+</ol>
+<h3>Seguir el palo</h3>
+<p>Si ya hay Rey y te toca, hay cuatro preguntas, en este orden:</p>
+<ol>
+<li><strong>¿Voy ganando?</strong> Pasá. No tires “por las dudas”.</li>
+<li><strong>¿Puedo pasar a ganar con una del palo?</strong> Tirala, la más chica que aún gane. Guardá el K para otra mano si un 9 ya alcanza.</li>
+<li><strong>¿Puedo derrocar o tirar comodín?</strong> Solo si después te queda forma de ganar.</li>
+<li>Si no, <strong>pasá</strong> o <strong>descartá</strong>. No alimentes la mesa con cartas que no ganan.</li>
+</ol>
+<p>Ejemplo: el Rey es 5♠. El otro tiene el 6♠ y va ganando. Si tenés 8♠, tiraló y pasás a ganar. Si solo tenés 3♠, no lo tires: no cambia quién gana y te quedás sin esa pica.</p>
+<p><strong>Gastar de menos.</strong> Si el que va ganando tiene un 9 y vos tenés J y K del palo, el J alcanza. El K declara después.</p>
+
+<h2>Pasar o descartar</h2>
+<p>Las dos <strong>cierran la mano</strong>. Gana quien iba arriba. La diferencia es el pozo.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Pasar</th>
+<th>Descartar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Se cierra</td>
+<td>Sí</td>
+<td>Sí</td>
+</tr>
+<tr>
+<td>Pescás después</td>
+<td>No</td>
+<td>Sí, si el pozo tiene cartas y no te vaciaste</td>
+</tr>
+<tr>
+<td>Qué perdés</td>
+<td>Nada de la mano</td>
+<td>Una carta (la que tiraste, no cuenta)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pasá</strong> cuando vas ganando, cuando no podés ganar y querés guardar todo, o cuando estás armando un cierre.</p>
+<p><strong>Descartá</strong> cuando:</p>
+<ul>
+<li>No podés ganar y te conviene <strong>cambiar</strong> una carta inútil (un As suelto, un 3 de un palo que no vas a declarar).</li>
+<li>El pozo todavía es grande y necesitás munición para más adelante.</li>
+</ul>
+<p>Si no querés pescar, no descartes: pasá. El descarte te ofrece el pozo; si no lo querés, no abras esa puerta.</p>
+<p>No descartes una figura ni un 6 ni un comodín “porque no es del palo”. Eso es regalar herramientas.</p>
+
+<h2>El pozo</h2>
+<p>El robo es <strong>optativo</strong> y recién <strong>después</strong> de la mano, solo si <strong>descartaste</strong>. Si querés cerrar, no robes. Quien se quedó sin cartas no pesca: o cerró, o en esa ronda ya no juega.</p>
+<p><strong>Si el pozo se acaba:</strong> no se vuelve a mezclar en esa ronda. Las cartas ya jugadas no vuelven al pozo. Se sigue con lo que cada uno tiene en la mano. Descartar sigue cerrando la mano, pero <strong>no pescás</strong>. Recién cuando alguien <strong>cierra la ronda</strong> (gana con su última carta) se baraja de nuevo y se reparte.</p>
+<p><strong>Robá</strong> cuando te quedan varias cartas, el pozo tiene mazo, y necesitás palo, un 6, un derrocamiento o un comodín.</p>
+<p><strong>No robes</strong> cuando estás a una carta de cerrar, cuando ya tenés tantas que no las controlás, o cuando el otro está por cerrar y vos no tenés con qué pararlo.</p>
+<p>La carta robada no es “gratis”: es una más que te pueden cobrar si cierran. Si el pozo se acabó, no va a llegar munición nueva: conviene más guardar un Rey que gane.</p>
+
+<h2>Derrocamiento</h2>
+<p>Un Rey se <strong>derroca</strong> cuando alguien juega el <strong>mismo número</strong> en <strong>otro palo</strong>.</p>
+<ul>
+<li>Juan declara el Rey con <strong>9♥</strong>.</li>
+<li>Pedro tira <strong>J♥</strong> y, en ese momento, iría ganando (J &gt; 9).</li>
+<li>María tira <strong>9♠</strong>: mismo 9, otro palo. <strong>Derroca</strong>.</li>
+<li>El Rey pasa a ser <strong>9♠</strong>. Los corazones <strong>dejan de contar</strong>.</li>
+<li>A partir de ahí la mano <strong>sigue en picas</strong>: se puede tirar otra pica, derrocar de nuevo, pasar o descartar. Si María gana esa mano, suma <strong>2</strong> (derrocó y ganó).</li>
+</ul>
+<p>El derrocamiento es <strong>válido en tu turno</strong> aunque todavía te quede el palo viejo. Si tenés el palo y el otro 9, <strong>elegís</strong>: seguir, derrocar, pasar o descartar.</p>
+<p>Se puede derrocar <strong>más de una vez</strong> en la misma mano: 9♥ → 9♠ → 9♦, y así. Hay cuatro palos; de un mismo número, el primero es el Rey y quedan hasta <strong>tres</strong> derrocamientos.</p>
+<p>El comodín <strong>no derroca</strong>: no tiene número. Si el Rey es un comodín, no hay número que igualar y <strong>no se puede derrocar</strong>. Un comodín tirado en cualquier momento de la mano <strong>gana al final</strong>, aunque después derroquen el Rey (si salen los dos, gana el último).</p>
+<p><strong>Derrocá</strong> cuando ibas perdiendo y el palo nuevo te favorece (tenés K, Q o varias de ese palo); cuando el otro está por <strong>cerrar</strong>; cuando hay <strong>media</strong> y tenés otro 6 (se cae la media; después gana la más alta del palo nuevo); o cuando podés encadenar otro derrocamiento o una figura del palo nuevo.</p>
+<p><strong>No derroques</strong> cuando solo tenés el número y nada más de ese palo (te comen con el K nuevo), cuando ya vas ganando, o cuando el Rey es un comodín.</p>
+<p>Si derrocás y seguís arriba, <strong>pasá</strong>. El +2 se cobra al ganar, no por seguir tirando.</p>
+
+<h2>Quién gana la mano</h2>
+<p>Solo cuentan las cartas del <strong>palo vigente</strong> (el del Rey actual). Lo que se tiró del palo derrocado <strong>no suma</strong>.</p>
+<ul>
+<li><strong>Regla normal:</strong> gana la más alta de ese palo. <strong>K &gt; Q &gt; J &gt; 10 &gt; 9 &gt; 8 &gt; 7 &gt; 6 &gt; 5 &gt; 4 &gt; 3 &gt; 2 &gt; A</strong>.</li>
+<li><strong>La media:</strong> si <strong>declaraste un 6</strong> como Rey, ese 6 ya es el centro y <strong>gana la mano</strong> (salvo comodín u otro 6 que derroque). No es una carrera para acercarse después.</li>
+<li><strong>Comodín:</strong> hay solo <strong>2</strong>. Gana a <strong>cualquier Rey</strong>, aunque se haya tirado antes de un derrocamiento. Podés tirarlo aunque tengas el palo. Si salen los dos, gana el <strong>último</strong>. Si el Rey es un comodín, quien tenga el otro <strong>está obligado</strong> a jugarlo.</li>
+</ul>
+
+<h2>La media (el 6)</h2>
+<p>El 6 está <strong>en el medio</strong> del mazo: arriba quedan K, Q, J, 10, 9, 8, 7 y abajo 5, 4, 3, 2, A. Por eso, si lo declarás Rey, la mano no se juega “a la más alta”. Se juega <strong>a quién está más cerca del 6</strong>.</p>
+<p><strong>Cuándo vale.</strong> Solo si el Rey de esa mano <strong>es un 6 que alguien declaró</strong>. No vale si el 6 quedó como Rey por un derrocamiento. Tirar un 6 después, siguiendo el palo, no activa la media.</p>
+<p><strong>Cómo se gana esa mano.</strong> El 6 declarado <strong>ya es el centro</strong> (distancia 0). Hay un solo 6 de ese palo: nadie puede acercarse más. Quien lo declaró <strong>va ganando</strong>. El 7, el 5 o el K del mismo palo pierden: están más lejos. No hace falta tirar otra carta “más cerca”. Se cierra cuando alguien <strong>pasa</strong> o <strong>descarta</strong>, y la mano es de quien declaró el 6.</p>
+<p>Los únicos que te la sacan:</p>
+<ul>
+<li>un <strong>comodín</strong> (le gana al 6);</li>
+<li><strong>otro 6</strong> de otro palo: <strong>derroca</strong>, la media <strong>se cae</strong> y a partir de ahí gana la más alta del palo nuevo.</li>
+</ul>
+<p><strong>Distancias</strong> (el As vale 1), por si dos cartas compiten entre sí sin el 6, o para ver por qué el K acá no vale:</p>
+<table>
+<thead>
+<tr>
+<th>Carta</th>
+<th>Distancia</th>
+<th>¿Qué tan cerca?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>6</strong></td>
+<td>0</td>
+<td>El centro. Gana siempre entre las del palo.</td>
+</tr>
+<tr>
+<td>5 o 7</td>
+<td>1</td>
+<td>Un paso</td>
+</tr>
+<tr>
+<td>4 u 8</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>3 o 9</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>2 o 10</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>A o J</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>Q</td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>K</strong></td>
+<td>7</td>
+<td>Lo más lejos. El K, que normalmente gana, acá pierde.</td>
+</tr>
+</tbody>
+</table>
+<p>Si dos cartas quedan a la <strong>misma</strong> distancia (5 y 7, o 4 y 8), gana la <strong>más alta</strong> de las dos: 7 le gana al 5, 8 le gana al 4.</p>
+<p><strong>Se cae si derrocan.</strong> Si alguien tira otro 6 de otro palo, el palo cambia y la media <strong>deja de valer</strong>. A partir de ahí gana la más alta del palo nuevo: un K♠ le gana al 6♠.</p>
+<h3>Cómo jugarla</h3>
+<p><strong>Declarala</strong> cuando querés una mano casi segura: para cerrar, para un +1 barato, o si el rival está cargado de figuras (K, Q y J valen poco). No la declares si ese 6 te cubre un palo fuerte, o si lo necesitás para derrocar la media de otro.</p>
+<p><strong>Una vez que la jugaste:</strong> pasá. Ya vas ganando. Si el otro sigue el palo, seguís arriba. Si te derrocan, la media se cae: respondé con figura del palo nuevo o comodín, o soltá la mano.</p>
+<p><strong>Si la declara otro:</strong> no tires K, Q, J ni el 7 “para acercarte”. No le ganan al 6.</p>
+<table>
+<thead>
+<tr>
+<th>Tenés</th>
+<th>Qué hacer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Comodín</strong></td>
+<td>Tiralo: es lo único que le gana de frente.</td>
+</tr>
+<tr>
+<td><strong>Otro 6</strong></td>
+<td>Derrocá solo si después podés ganar el palo nuevo (figura o comodín) o si el otro está por cerrar. Si derrocás y no tenés nada alto de ese palo, te comen con un K.</td>
+</tr>
+<tr>
+<td><strong>Ni 6 ni comodín</strong></td>
+<td><strong>Pasá.</strong> Guardá las figuras para una mano normal.</td>
+</tr>
+</tbody>
+</table>
+<p>Un 6 <strong>que no es Rey</strong> (el otro declaró 5♠ y vos tenés 6♠) es una carta útil: le gana al 5 y es barata. Usalo para tomar la punta. Eso <strong>no</strong> activa la media.</p>
+
+<h2>El comodín</h2>
+<p>Hay <strong>dos</strong>. Le gana a cualquier Rey, incluso a la media y al K. Si salen los dos, gana el <strong>último</strong>. Un comodín ya tirado <strong>sigue ganando</strong> aunque después derroquen. No cambia el palo: no derroca.</p>
+<p><strong>Usalo</strong> para cortar un cierre ajeno, bajar un K o una media que no podés derrocar, o cerrar vos (si es tu última carta, casi siempre gana, salvo que el otro tenga el segundo).</p>
+<p><strong>Guardalo</strong> si la mesa está tranquila. Es la carta más cara del mazo: un +1 temprano no vale tanto como frenar un cierre de 7 u 8 puntos.</p>
+<p>Si <strong>declaran un comodín</strong> como Rey y tenés el otro, <strong>tenés que tirarlo</strong>. Si no lo tenés, pasá o descartá. No lo declares de entrada salvo que sea tu cierre o no tengas otra salida decente.</p>
+
+<h2>Puntos</h2>
+<table>
+<thead>
+<tr>
+<th>Jugada</th>
+<th>Puntos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ganar la mano</td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Derrocar y ganar esa mano</td>
+<td>+2</td>
+</tr>
+<tr>
+<td>Cerrar (ganar con tu última carta)</td>
+<td>esos puntos, <strong>+3</strong>, y <strong>+1</strong> por cada carta que les queda a los demás (<strong>máx. +4</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p>Primero en <strong>40</strong> gana la partida. Si hay empate en 40 o más, se juega una ronda extra.</p>
+<h3>La carrera a 40</h3>
+<table>
+<thead>
+<tr>
+<th>Situación</th>
+<th>Prioridad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vas muy atrás (15 o más abajo)</td>
+<td>Buscá <strong>+2</strong> (derrocar y ganar) y un <strong>cierre</strong>. Los +1 no alcanzan.</td>
+</tr>
+<tr>
+<td>Empate o diferencia chica</td>
+<td>No regales manos. Pasá si no ganás. Un cierre ajeno te saca del partido.</td>
+</tr>
+<tr>
+<td>Vas 36–39</td>
+<td>Un +1 o +2 cierra el partido. No arriesgues un derrocamiento flojo. Declará K, 6 o comodín y pasá.</td>
+</tr>
+<tr>
+<td>El otro va 36–39</td>
+<td>Cortá su mano: comodín, derrocamiento, o no le dejes pasar ganando.</td>
+</tr>
+<tr>
+<td>Empate en 40 o más</td>
+<td>Ronda extra. Jugá como si fuera la última: cierre o +2.</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Cerrar la ronda</h2>
+<p>Cerrás si <strong>ganás</strong> la mano y esa carta era <strong>la última</strong> que te quedaba. Si te vaciás sin ganar, en esa ronda ya no jugás: no cerraste, solo te fuiste.</p>
+<p>Antes de dejar una sola carta, preguntate: <strong>¿esta carta gana si la declaro?</strong> K, 6, comodín: sí, salvo respuestas raras. Un 4 suelto: no.</p>
+<p><strong>Para cerrar</strong></p>
+<ul>
+<li>Dejá como última una carta que declare y gane.</li>
+<li>No robes en la mano anterior si ya estás listo.</li>
+<li>Si te superan, no tires la última a lo loco: quedarte con una carta perdedora es mejor que irte de la ronda y dejarles el cierre a ellos… salvo que esa carta no sirva nunca.</li>
+</ul>
+<p><strong>Para impedir un cierre</strong></p>
+<ul>
+<li>Si el otro tiene una carta, <strong>no pases</strong> si podés ganarle: seguir el palo, derrocar o comodín.</li>
+<li>Un descarte cierra: no descartes si el que va ganando está en una carta.</li>
+<li>Contá las cartas de la consola y de los asientos. “Rival · 1 carta” es alarma.</li>
+</ul>
+<p>El bonus de cartas ajenas está <strong>topeado en +4</strong>. En mesa de 5 o 6, con 4 cartas en la mesa ya cobrás el máximo. En 1 vs 1, cada carta que le dejes suma (hasta 4).</p>
+
+<h2 id="ejemplos">Ejemplos</h2>
+<h3 class="example-title">A — Gana la más alta del palo</h3>
+<p>El Rey es <strong>K♥</strong>. Hay que jugar corazones. Nadie derroca.</p>
+<table>
+<thead>
+<tr>
+<th>Jugador</th>
+<th>Carta</th>
+<th>¿Cuenta?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tú</td>
+<td>K♥ (Rey)</td>
+<td>Sí</td>
+</tr>
+<tr>
+<td>Luis</td>
+<td>Q♥</td>
+<td>Sí</td>
+</tr>
+<tr>
+<td>Marta</td>
+<td>A♥</td>
+<td>Sí</td>
+</tr>
+<tr>
+<td>Ana</td>
+<td>9♠</td>
+<td>No: es descarte (no es un K de otro palo)</td>
+</tr>
+</tbody>
+</table>
+<p class="result"><strong>Ganás vos.</strong> De las cartas de corazones, <strong>K &gt; Q &gt; A</strong>. Si Ana descarta el 9♠, se cierra la mano (y después puede pescar). Si pasa, también se cierra, sin pescar.</p>
+
+<h3 class="example-title">A2 — Pasar cierra la mano</h3>
+<p>El Rey es <strong>Q♥</strong>. Vos tenés <strong>3♥</strong> (no le gana a la Q) y <strong>K♠</strong>, que querés declarar después.</p>
+<table>
+<thead>
+<tr>
+<th>Jugador</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Luis</td>
+<td>Declaró Q♥.</td>
+</tr>
+<tr>
+<td>Vos</td>
+<td><strong>Pasás.</strong> Se cierra la mano.</td>
+</tr>
+</tbody>
+</table>
+<p class="result"><strong>Gana Luis</strong> con la Q. Te quedás el 3♥ y el K♠. Descartar también cierra; en ese caso después podés pescar del pozo.</p>
+
+<h3 class="example-title">B — Seguir tirando del palo</h3>
+<p>Declarás el Rey con <strong>5♠</strong>. Luis responde <strong>6♠</strong> y va ganando. Te toca de nuevo y todavía tenés el <strong>8♠</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Orden</th>
+<th>Jugador</th>
+<th>Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Vos</td>
+<td>Tirás el 5♠ (Rey).</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Luis</td>
+<td>Tira el 6♠. Va ganando.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Vos</td>
+<td>Tirás el 8♠. Ahora vas ganando.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Luis</td>
+<td>Pasa. Se cierra la mano.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ganás vos</strong> con el 8♠. No es una carta por cabeza: mientras nadie pase ni descarte, se puede seguir tirando del palo.</p>
+
+<h3 class="example-title">C — Derrocamiento (Juan, Pedro y María)</h3>
+<ol>
+<li><strong>Juan</strong> declara el Rey con <strong>9♥</strong>. Fija corazones. Si le quedan más corazones, se los guarda.</li>
+<li><strong>Pedro</strong> tira <strong>J♥</strong>. Entre corazones, J &gt; 9: Pedro iría ganando.</li>
+<li><strong>María</strong> tira <strong>9♠</strong>. Mismo número, otro palo: <strong>derroca</strong>.</li>
+<li>El Rey vigente pasa a ser <strong>9♠</strong>. El 9♥ queda derrocado. El <strong>J♥ ya no cuenta</strong>.</li>
+<li>Ahora el palo es <strong>picas</strong>. La mano sigue: se puede tirar otra pica, derrocar, pasar o descartar.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Momento</th>
+<th>Carta</th>
+<th>Efecto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Juan</td>
+<td>9♥</td>
+<td>Rey inicial. Palo: corazones.</td>
+</tr>
+<tr>
+<td>Pedro</td>
+<td>J♥</td>
+<td>Seguiría ganando… si no hay derrocamiento.</td>
+</tr>
+<tr>
+<td>María</td>
+<td>9♠</td>
+<td>Derroca. Nuevo Rey. Palo: picas.</td>
+</tr>
+<tr>
+<td>Pedro</td>
+<td>3♦</td>
+<td>No tiene picas: descarta. No cuenta.</td>
+</tr>
+</tbody>
+</table>
+<p class="result"><strong>Gana María</strong> con el 9♠. Suma <strong>2</strong> porque derrocó y ganó. El J♥ de Pedro no sirve: era del palo derrocado. Si Pedro hubiera tenido K♠, ganaba él (+1) y el derrocamiento de María no le pagaba.</p>
+
+<h3 class="example-title">D — Se derroca dos veces</h3>
+<p>El Rey empieza en <strong>4♥</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Jugador</th>
+<th>Carta</th>
+<th>Qué pasa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ana</td>
+<td>4♥</td>
+<td>Rey. Palo: corazones.</td>
+</tr>
+<tr>
+<td>Luis</td>
+<td>K♥</td>
+<td>Iría ganando (K es la más alta).</td>
+</tr>
+<tr>
+<td>Marta</td>
+<td>4♠</td>
+<td>Derroca. Ahora el Rey es 4♠. Los corazones no cuentan.</td>
+</tr>
+<tr>
+<td>Vos</td>
+<td>4♦</td>
+<td>Derroca otra vez. Ahora el Rey es 4♦. Las picas no cuentan.</td>
+</tr>
+</tbody>
+</table>
+<p>A partir del 4♦ la mano sigue en diamantes. Gana la más alta de diamantes (o un comodín). El K♥ de Luis ya no cuenta en esta mano, pero puede declararlo después.</p>
+
+<h3 class="example-title">E — La media</h3>
+<p>Declarás el Rey con <strong>6♣</strong>. Entra <strong>la media</strong>. El 6 ya es el centro y gana.</p>
+<table>
+<thead>
+<tr>
+<th>Carta</th>
+<th>Distancia</th>
+<th>¿Gana?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6♣</td>
+<td>0</td>
+<td>Sí: es el centro</td>
+</tr>
+<tr>
+<td>5♣</td>
+<td>1</td>
+<td>Cerca, pero no tanto</td>
+</tr>
+<tr>
+<td>K♣</td>
+<td>7</td>
+<td>El más lejos. El K acá no sirve</td>
+</tr>
+<tr>
+<td>A♣ (vale 1)</td>
+<td>5</td>
+<td>Lejos</td>
+</tr>
+</tbody>
+</table>
+<p class="result"><strong>Gana el 6.</strong> No es una carrera: Luis y Marta no pueden “acercarse más”. Quien declaró pasa y se queda la mano.</p>
+<p>Si alguien tira <strong>6♠</strong>, derroca: el palo pasa a picas y <strong>la media se cae</strong>. Gana la pica más alta.</p>
+
+<h3 class="example-title">F — El comodín</h3>
+<p>El Rey es <strong>K♥</strong>. Luis tira el As de corazones. Marta tira un comodín.</p>
+<p class="result"><strong>Gana Marta.</strong> El comodín le gana a cualquier Rey, incluso al K. Si después sale el otro comodín, ese se queda con la mano.</p>
+<p>El comodín no cambia el palo. Si alguien derroca el K♥ con otro K <strong>después</strong> de que Marta tiró el comodín, Marta <strong>sigue ganando</strong>: el comodín ya está en la mesa y cuenta igual.</p>
+
+<h2>Consejos</h2>
+<h3>Según cuántos juegan</h3>
+<p><strong>De a 2 (12 cartas).</strong> Hay más mazo en la mano y más pozo que se siente. La media y los K duran más. Descartar para pescar es más fuerte. El leftover del cierre duele: no le dejes 6 cartas si podés evitarlo (igual el tope es +4).</p>
+<p><strong>De a 3 o más (8 cartas).</strong> Las rondas son más cortas. Alguien se queda en 1 carta rápido. El comodín vale más como freno. Derrocar “a ciegas” es peor: hay más gente con el K del palo nuevo. Pasá más; no alimentes una mesa de cuatro.</p>
+<p>En mesa, el que va ganando la mano no sos vos contra uno: es contra todos los que todavía tienen turno. Si ya vas arriba, <strong>pasá</strong> antes de que el quinto asiento tire el comodín.</p>
+<h3>Errores que se pagan caros</h3>
+<ol>
+<li>Tirar cuando ya vas ganando.</li>
+<li>Seguir el palo con una carta que <strong>no supera</strong> al que va arriba.</li>
+<li>Descartar un K, un 6 o un comodín.</li>
+<li>Meter figuras en la <strong>media</strong>.</li>
+<li>Derrocar sin palo nuevo para defender.</li>
+<li>Robar estando a una carta del cierre.</li>
+<li>Declarar un 2 “para salir” y regalar el +1.</li>
+<li>Ignorar al que tiene <strong>una carta</strong>.</li>
+<li>Gastar el comodín en la primera mano de la ronda.</li>
+<li>Olvidar que <strong>pasar cierra</strong>: a veces es exactamente lo que el otro necesita.</li>
+</ol>
+<h3>Recordatorio</h3>
+<ul>
+<li>Vas ganando → <strong>pasá</strong>.</li>
+<li>Podés ganar con una más chica del palo → tirá esa, no el K.</li>
+<li>No podés ganar → pasá (guardar) o descartá (pescar).</li>
+<li>Derrocá solo si el palo nuevo te sirve o hay que cortar un cierre.</li>
+<li>El 6 declarado es casi un K al revés: pasá; no lo pelees con figuras.</li>
+<li>El comodín es un freno, no un adorno.</li>
+<li>La última carta tiene que <strong>ganar</strong>. Si no, no es un cierre, es irse de la ronda.</li>
+<li>El marcador y la consola de la derecha dicen quién va y cuánto falta. Usalos.</li>
+</ul>
+<p>Si dudás entre una jugada linda y una jugada que cierra (o que impide un cierre), hacé la segunda.</p>
+
+<h2>En pantalla</h2>
+<ol>
+<li>Tocá una carta de <strong>Tu mano</strong>: se juega al instante. Si te toca de nuevo, podés tirar otra del palo.</li>
+<li><strong>Pasar</strong> o <strong>descartar</strong> cierra la mano. Gana quien iba arriba. Si descartás y el pozo tiene cartas, después podés pescar.</li>
+<li>El mismo número de otro palo <strong>derroca</strong>: el Rey caído se tacha y la mano sigue en el palo nuevo.</li>
+<li>La <strong>consola</strong> y el <strong>marcador</strong> están a la derecha. El <strong>?</strong> abre las reglas en el juego. En el menú también está <strong>Consejos</strong>.</li>
+</ol>
+<p class="colophon">Este reglamento reúne las reglas, los ejemplos y los consejos de la mesa digital Yo Soy El Rey.</p>
+    </main>
+</body>
+</html>
